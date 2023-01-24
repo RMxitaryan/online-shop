@@ -1,7 +1,6 @@
 import { createUseStyles } from 'react-jss';
 import CarouselBox from './components/CarouselBox';
 import { Route, Routes, Outlet } from 'react-router-dom';
-import SearchField from './components/Search/SearchField';
 import Home from './components/HomePage/Home';
 const useStyles = createUseStyles({
 	app: {
@@ -19,7 +18,6 @@ function App() {
 			<Home />
 			<Routes>
 				<Route path="/" element={<CarouselBox />} />
-				<Route path="/Search" element={<SearchField />} />
 			</Routes>
 		</div>
 	);
