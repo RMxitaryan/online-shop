@@ -1,9 +1,8 @@
 import { createUseStyles } from 'react-jss';
-import CarouselBox from '../CarouselBox';
-import Search from '../Search/Search';
 import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import FullScreenDialog from '../Search/SearchDialog';
 const useStyles = createUseStyles({
-	app: {},
 	header: {
 		backgroundColor: '#3a3330',
 		width: '100%',
@@ -24,11 +23,27 @@ const useStyles = createUseStyles({
 		width: 60,
 		marginRight: 12,
 	},
+	searchIcon: {
+		'&:hover': {
+			cursor: 'pointer',
+		},
+	},
 	headerTopLeft: { marginLeft: 15 },
 });
 
 function Home() {
 	const classes = useStyles();
+
+	const [open, setOpen] = useState(false);
+
+	const handleClickOpen = () => {
+		setOpen(true);
+	};
+
+	const handleClose = () => {
+		setOpen(false);
+	};
+
 	return (
 		<div className={classes.app}>
 			<div className={classes.header}>
@@ -42,9 +57,20 @@ function Home() {
 				</div>
 				<div className={classes.headerTopRight}>
 					<img src="/img/bag.png" width={23} height={23} />
-					<Search />
+					<img
+						src="/img/search.png"
+						width={23}
+						height={23}
+						className={classes.searchIcon}
+						onClick={handleClickOpen}
+					/>
 				</div>
 			</div>
+			<FullScreenDialog
+				handleClickOpen={handleClickOpen}
+				handleClose={handleClose}
+				open={open}
+			/>
 		</div>
 	);
 }
