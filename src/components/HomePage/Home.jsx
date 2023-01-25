@@ -2,6 +2,9 @@ import { createUseStyles } from 'react-jss';
 import { Link } from 'react-router-dom';
 import React, { useState } from 'react';
 import FullScreenDialog from '../Search/SearchDialog';
+import PrimaryButton from '../Button/Button';
+import SignUpDialog from '../SignUp/SignUpDialog';
+import SignInDialog from '../SignIn/SignIn';
 const useStyles = createUseStyles({
 	header: {
 		backgroundColor: '#3a3330',
@@ -19,10 +22,12 @@ const useStyles = createUseStyles({
 	},
 	headerTopRight: {
 		display: 'flex',
+		alignItems: 'center',
 		justifyContent: 'space-between',
-		width: 60,
+		width: 200,
 		marginRight: 12,
 	},
+
 	searchIcon: {
 		'&:hover': {
 			cursor: 'pointer',
@@ -34,14 +39,28 @@ const useStyles = createUseStyles({
 function Home() {
 	const classes = useStyles();
 
-	const [open, setOpen] = useState(false);
+	const [searchDialogOpen, setSearchDialogOpen] = useState(false);
+	const [signUpDialogOpen, setSignUpDialogOpen] = useState(false);
+	const [signInDialogOpen, setSignInDialogOpen] = useState(false);
 
-	const handleClickOpen = () => {
-		setOpen(true);
+	const handleSignUpClickOpen = () => {
+		setSignUpDialogOpen(true);
+	};
+	const handleSignUpClose = () => {
+		setSignUpDialogOpen(false);
+	};
+	const handleSearchClickOpen = () => {
+		setSearchDialogOpen(true);
 	};
 
-	const handleClose = () => {
-		setOpen(false);
+	const handleSearchClose = () => {
+		setSearchDialogOpen(false);
+	};
+	const handleSignInClickOpen = () => {
+		setSignInDialogOpen(true);
+	};
+	const handleSignInClose = () => {
+		setSignInDialogOpen(false);
 	};
 
 	return (
@@ -56,20 +75,44 @@ function Home() {
 					</Link>
 				</div>
 				<div className={classes.headerTopRight}>
+					<PrimaryButton
+						onClick={handleSignInClickOpen}
+						disabled={false}
+						variant="text"
+					>
+						sign in
+					</PrimaryButton>
+					<PrimaryButton
+						onClick={handleSignUpClickOpen}
+						disabled={false}
+						variant="text"
+					>
+						sign up
+					</PrimaryButton>
 					<img src="/img/bag.png" width={23} height={23} />
 					<img
 						src="/img/search.png"
 						width={23}
 						height={23}
 						className={classes.searchIcon}
-						onClick={handleClickOpen}
+						onClick={handleSearchClickOpen}
 					/>
 				</div>
 			</div>
 			<FullScreenDialog
-				handleClickOpen={handleClickOpen}
-				handleClose={handleClose}
-				open={open}
+				handleClickOpen={handleSearchClickOpen}
+				handleClose={handleSearchClose}
+				open={searchDialogOpen}
+			/>
+			<SignUpDialog
+				handleClickOpen={handleSignUpClickOpen}
+				handleClose={handleSignUpClose}
+				open={signUpDialogOpen}
+			/>
+			<SignInDialog
+				handleClickOpen={handleSignInClickOpen}
+				handleClose={handleSignInClose}
+				open={signInDialogOpen}
 			/>
 		</div>
 	);
