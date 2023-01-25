@@ -8,6 +8,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
 import { createUseStyles } from 'react-jss';
 import Search from '@mui/icons-material/Search';
+import { List } from '@mui/material';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
 	return <Slide direction="up" ref={ref} {...props} />;
@@ -69,6 +70,11 @@ const useStyles = createUseStyles({
 			cursor: 'pointer',
 		},
 	},
+	list: {
+		width: '100%',
+		height: '100%',
+		backgroundColor: '3a3333',
+	},
 });
 function FullScreenDialog({ open, handleClose }) {
 	const [inputValue, setInputValue] = useState('');
@@ -80,6 +86,7 @@ function FullScreenDialog({ open, handleClose }) {
 				open={open}
 				onClose={handleClose}
 				TransitionComponent={Transition}
+				className={classes.dialog}
 			>
 				<AppBar sx={{ position: 'relative' }} className={classes.appBar}>
 					<Toolbar className={classes.searchBar}>
@@ -120,6 +127,7 @@ function FullScreenDialog({ open, handleClose }) {
 						</IconButton>
 					</Toolbar>
 				</AppBar>
+				<List className={classes.list}></List>
 			</Dialog>
 		</div>
 	);
