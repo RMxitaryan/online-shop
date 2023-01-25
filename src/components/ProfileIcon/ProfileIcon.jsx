@@ -2,8 +2,8 @@ import * as React from 'react';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { createUseStyles } from 'react-jss';
-import { Routes } from 'react-router';
 import { Link } from 'react-router-dom';
+
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 const useStyles = createUseStyles({
 	profileIcone: {
@@ -12,9 +12,16 @@ const useStyles = createUseStyles({
 		height: 30,
 		width: 30,
 	},
+	link: {
+		textDecoration: 'none',
+		color: '#3a3333',
+		'&:hover': {
+			color: '#3a3333',
+		},
+	},
 });
 
-function ProfileIcon() {
+function ProfileIcon({ setOpenHome }) {
 	const classes = useStyles();
 	const [anchorEl, setAnchorEl] = React.useState(null);
 	const open = Boolean(anchorEl);
@@ -24,7 +31,6 @@ function ProfileIcon() {
 	const handleClose = () => {
 		setAnchorEl(null);
 	};
-
 	return (
 		<>
 			<AccountCircleOutlinedIcon
@@ -51,14 +57,41 @@ function ProfileIcon() {
 					horizontal: 'left',
 				}}
 			>
-				<Link to="/profile">
-					{<MenuItem onClick={handleClose}>Profile</MenuItem>}
+				<Link to="/profile" className={classes.link}>
+					{
+						<MenuItem
+							onClick={() => {
+								handleClose();
+								setOpenHome(false);
+							}}
+						>
+							Profile
+						</MenuItem>
+					}
 				</Link>
-				<Link to="/favourite">
-					{<MenuItem onClick={handleClose}>Favourite</MenuItem>}
+				<Link to="/favourite" className={classes.link}>
+					{
+						<MenuItem
+							onClick={() => {
+								handleClose();
+								setOpenHome(false);
+							}}
+						>
+							Favourite
+						</MenuItem>
+					}
 				</Link>
-				<Link to="/about">
-					{<MenuItem onClick={handleClose}>About</MenuItem>}
+				<Link to="/about" className={classes.link}>
+					{
+						<MenuItem
+							onClick={() => {
+								handleClose();
+								setOpenHome(false);
+							}}
+						>
+							About
+						</MenuItem>
+					}
 				</Link>
 			</Menu>
 		</>
