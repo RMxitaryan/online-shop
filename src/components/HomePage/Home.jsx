@@ -5,6 +5,7 @@ import FullScreenDialog from '../Search/SearchDialog';
 import PrimaryButton from '../Button/Button';
 import SignUpDialog from '../SignUp/SignUpDialog';
 import SignInDialog from '../SignIn/SignIn';
+import ProfileIcon from '../ProfileIcon/ProfileIcon';
 const useStyles = createUseStyles({
 	header: {
 		backgroundColor: '#3a3330',
@@ -26,6 +27,10 @@ const useStyles = createUseStyles({
 		justifyContent: 'space-between',
 		width: 200,
 		marginRight: 12,
+		// display: "flex",
+		// justifyContent: "space-between",
+		// width: 90,
+		// marginRight: 12,
 	},
 
 	searchIcon: {
@@ -75,6 +80,7 @@ function Home() {
 					</Link>
 				</div>
 				<div className={classes.headerTopRight}>
+					<ProfileIcon />
 					<PrimaryButton
 						onClick={handleSignInClickOpen}
 						disabled={false}
