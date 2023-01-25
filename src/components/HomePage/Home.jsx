@@ -6,6 +6,7 @@ import PrimaryButton from '../Button/Button';
 import SignUpDialog from '../SignUp/SignUpDialog';
 import SignInDialog from '../SignIn/SignIn';
 import ProfileIcon from '../ProfileIcon/ProfileIcon';
+
 const useStyles = createUseStyles({
 	header: {
 		backgroundColor: '#3a3330',
@@ -25,12 +26,8 @@ const useStyles = createUseStyles({
 		display: 'flex',
 		alignItems: 'center',
 		justifyContent: 'space-between',
-		width: 200,
+		width: 250,
 		marginRight: 12,
-		// display: "flex",
-		// justifyContent: "space-between",
-		// width: 90,
-		// marginRight: 12,
 	},
 
 	searchIcon: {
