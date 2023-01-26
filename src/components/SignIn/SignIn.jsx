@@ -10,14 +10,14 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 const useStyles = createUseStyles({
-	signUpDialog: {
+	signInDialog: {
 		display: 'flex',
 		flexDirection: 'column',
 		justifyContent: 'space-evenly',
 		alignItems: 'center',
 		borderRadius: '25px',
 	},
-	signUpContent: {
+	signInContent: {
 		width: '400px',
 		height: '400px',
 		backgroundColor: '#3a3333',
@@ -27,7 +27,7 @@ const useStyles = createUseStyles({
 		alignItems: 'center',
 		justifyContent: 'space-evenly',
 	},
-	signUpDialogActions: {
+	signInDialogActions: {
 		backgroundColor: '#3a3333',
 		width: '100%',
 		opacity: 0.8,
@@ -36,19 +36,21 @@ const useStyles = createUseStyles({
 	},
 	PrimaryButton: {
 		color: 'white',
+		width: '100px',
+		fontSize: '18px',
 		'&:hover': {
 			marginTop: 0,
-			boxSizing: 'border-box',
-			borderBottom: '1px solid orange',
+			backgroundColor: 'rgb(200,200,200)',
+			color: 'black',
 		},
 	},
-	signUpInputs: {
+	signInInputs: {
 		flex: 0.7,
 		display: 'flex',
 		flexDirection: 'column',
 		justifyContent: 'space-evenly',
 	},
-	signUpInput: {
+	signInInput: {
 		borderRadius: '25px',
 		border: 'none',
 		width: '200px',
@@ -70,10 +72,10 @@ function SignInDialog({ open, handleClose }) {
 			onClose={handleClose}
 			aria-describedby="alert-dialog-slide-description"
 		>
-			<div className={classes.signUpDialog}>
-				<DialogContent className={classes.signUpContent}>
-					<h4 style={{ color: 'white' }}>Sign Up</h4>
-					<div className={classes.signUpInputs}>
+			<div className={classes.signInDialog}>
+				<DialogContent className={classes.signInContent}>
+					<h1 style={{ color: 'white' }}>Sign Up</h1>
+					<div className={classes.signInInputs}>
 						<input
 							type="text"
 							value={userName}
@@ -81,7 +83,7 @@ function SignInDialog({ open, handleClose }) {
 								setUserName(e.target.value);
 							}}
 							placeholder="Username"
-							className={classes.signUpInput}
+							className={classes.signInInput}
 						/>
 						<input
 							type="password"
@@ -90,11 +92,11 @@ function SignInDialog({ open, handleClose }) {
 								setPassword(e.target.value);
 							}}
 							placeholder="Password"
-							className={classes.signUpInput}
+							className={classes.signInInput}
 						/>
 					</div>
 				</DialogContent>
-				<DialogActions className={classes.signUpDialogActions}>
+				<DialogActions className={classes.signInDialogActions}>
 					<div>
 						<PrimaryButton className={classes.PrimaryButton} variant="text">
 							Sign In

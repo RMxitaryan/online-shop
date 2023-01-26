@@ -13,7 +13,6 @@ const useStyles = createUseStyles({
 	signUpDialog: {
 		display: 'flex',
 		flexDirection: 'column',
-		justifyContent: 'space-evenly',
 		alignItems: 'center',
 		borderRadius: '25px',
 	},
@@ -30,16 +29,19 @@ const useStyles = createUseStyles({
 	signUpDialogActions: {
 		backgroundColor: '#3a3333',
 		width: '100%',
-		opacity: 0.8,
 		display: 'flex',
 		justifyContent: 'space-around',
+
+		opacity: 0.8,
 	},
 	PrimaryButton: {
 		color: 'white',
+		width: '100px',
+		fontSize: '18px',
 		'&:hover': {
 			marginTop: 0,
-			boxSizing: 'border-box',
-			borderBottom: '1px solid orange',
+			backgroundColor: 'rgb(200,200,200)',
+			color: 'black',
 		},
 	},
 	signUpInputs: {
