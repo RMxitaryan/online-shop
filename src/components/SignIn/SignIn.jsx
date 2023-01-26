@@ -5,6 +5,9 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import Slide from '@mui/material/Slide';
 import { createUseStyles } from 'react-jss';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+import 'firebase/compat/database';
 const Transition = React.forwardRef(function Transition(props, ref) {
 	return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -63,6 +66,22 @@ function SignInDialog({ open, handleClose }) {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const classes = useStyles();
+
+	const onSignIn = () => {
+		firebase
+			.auth()
+			.signInWithEmailAndPassword(email, password)
+			.then(
+				() => {
+					setEmail('');
+					setPassword('');
+					handleClose();
+				},
+				() => {
+					alert('Invalid email or passwor');
+				}
+			);
+	};
 	return (
 		<Dialog
 			className={classes.Dialog}
@@ -74,7 +93,7 @@ function SignInDialog({ open, handleClose }) {
 		>
 			<div className={classes.signInDialog}>
 				<DialogContent className={classes.signInContent}>
-					<h1 style={{ color: 'white' }}>Sign Up</h1>
+					<h1 style={{ color: 'white' }}>Sign In</h1>
 					<div className={classes.signInInputs}>
 						<input
 							type="text"
@@ -98,11 +117,12 @@ function SignInDialog({ open, handleClose }) {
 				</DialogContent>
 				<DialogActions className={classes.signInDialogActions}>
 					<div>
-						<PrimaryButton className={classes.PrimaryButton} variant="text">
+						<PrimaryButton
+							onClick={onSignIn}
+							className={classes.PrimaryButton}
+							variant="text"
+						>
 							Sign In
-						</PrimaryButton>
-						<PrimaryButton className={classes.PrimaryButton} variant="text">
-							Sign Up
 						</PrimaryButton>
 					</div>
 				</DialogActions>
