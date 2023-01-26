@@ -5,7 +5,9 @@ import Profile from "./components/ProfileIcon/Profile";
 import Favourite from "./components/ProfileIcon/Favourite";
 import About from "./components/ProfileIcon/About";
 import Navbar from "./components/Navbar/Navbar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { RingLoader } from "react-spinners";
+import { height } from "@mui/system";
 
 const useStyles = createUseStyles({
   app: {
@@ -14,6 +16,14 @@ const useStyles = createUseStyles({
     width: "100%",
     height: "100%",
     marginRight: 0,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  loading: {
+    color: "#ef6f2e",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: "300px",
   },
 });
 
@@ -23,6 +33,15 @@ function App() {
   const [signInDialogOpen, setSignInDialogOpen] = useState(false);
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const [openHome, setOpenHome] = useState(true);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 5000);
+  }, []);
+
   const handleSignUpClickOpen = () => {
     // setSignInDialogOpen(false);
     setSignUpDialogOpen(true);
@@ -52,43 +71,52 @@ function App() {
   const classes = useStyles();
   return (
     <div className={classes.app}>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <Navbar
-              handelClickMenuBar={handelClickMenuBar}
-              setOpenHome={setOpenHome}
-              handleSignInClickOpen={handleSignInClickOpen}
-              handleSignUpClickOpen={handleSignUpClickOpen}
-              handleSearchClickOpen={handleSearchClickOpen}
-            />
-          }
-        >
+      {loading ? (
+        <RingLoader
+          color={"#ef6f2e"}
+          loading={loading}
+          size={150}
+          className={classes.loading}
+        />
+      ) : (
+        <Routes>
           <Route
-            index
+            path="/"
             element={
-              <Home
-                setIsOpenMenu={setIsOpenMenu}
-                isOpenMenu={isOpenMenu}
-                openHome={openHome}
-                signInDialogOpen={signInDialogOpen}
-                handleSignInClose={handleSignInClose}
+              <Navbar
+                handelClickMenuBar={handelClickMenuBar}
+                setOpenHome={setOpenHome}
                 handleSignInClickOpen={handleSignInClickOpen}
-                signUpDialogOpen={signUpDialogOpen}
-                handleSignUpClose={handleSignUpClose}
-                handleSearchClickOpen={handleSearchClickOpen}
-                handleSearchClose={handleSearchClose}
                 handleSignUpClickOpen={handleSignUpClickOpen}
-                searchDialogOpen={searchDialogOpen}
+                handleSearchClickOpen={handleSearchClickOpen}
               />
             }
-          />
-          <Route path="profile" element={<Profile />} />
-          <Route path="favourite" element={<Favourite />} />
-          <Route path="about" element={<About />} />
-        </Route>
-      </Routes>
+          >
+            <Route
+              index
+              element={
+                <Home
+                  setIsOpenMenu={setIsOpenMenu}
+                  isOpenMenu={isOpenMenu}
+                  openHome={openHome}
+                  signInDialogOpen={signInDialogOpen}
+                  handleSignInClose={handleSignInClose}
+                  handleSignInClickOpen={handleSignInClickOpen}
+                  signUpDialogOpen={signUpDialogOpen}
+                  handleSignUpClose={handleSignUpClose}
+                  handleSearchClickOpen={handleSearchClickOpen}
+                  handleSearchClose={handleSearchClose}
+                  handleSignUpClickOpen={handleSignUpClickOpen}
+                  searchDialogOpen={searchDialogOpen}
+                />
+              }
+            />
+            <Route path="profile" element={<Profile />} />
+            <Route path="favourite" element={<Favourite />} />
+            <Route path="about" element={<About />} />
+          </Route>
+        </Routes>
+      )}
     </div>
   );
 }
