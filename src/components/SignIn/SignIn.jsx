@@ -60,7 +60,7 @@ const useStyles = createUseStyles({
 });
 
 function SignInDialog({ open, handleClose }) {
-	const [userName, setUserName] = useState('');
+	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const classes = useStyles();
 	return (
@@ -78,11 +78,11 @@ function SignInDialog({ open, handleClose }) {
 					<div className={classes.signInInputs}>
 						<input
 							type="text"
-							value={userName}
+							value={email}
 							onChange={(e) => {
-								setUserName(e.target.value);
+								setEmail(e.target.value);
 							}}
-							placeholder="Username"
+							placeholder="Email"
 							className={classes.signInInput}
 						/>
 						<input

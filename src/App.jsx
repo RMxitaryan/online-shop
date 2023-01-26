@@ -54,6 +54,7 @@ function App() {
 		<div className={classes.app}>
 			<Routes>
 				<Route
+					path="/"
 					element={
 						<Navbar
 							handelClickMenuBar={handelClickMenuBar}
@@ -65,7 +66,7 @@ function App() {
 					}
 				>
 					<Route
-						path="/"
+						index
 						element={
 							<Home
 								setIsOpenMenu={setIsOpenMenu}
@@ -83,9 +84,9 @@ function App() {
 							/>
 						}
 					/>
-					<Route path="/profile" element={<Profile />} />
-					<Route path="/favourite" element={<Favourite />} />
-					<Route path="/about" element={<About />} />
+					<Route path="profile" element={<Profile />} />
+					<Route path="favourite" element={<Favourite />} />
+					<Route path="about" element={<About />} />
 				</Route>
 			</Routes>
 		</div>
