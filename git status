@@ -1,0 +1,126 @@
+[33mcommit 6e7c9202273f59214fe9851863a7de5d8f5d41a9[m[33m ([m[1;36mHEAD -> [m[1;32mnew-by-Lida[m[33m)[m
+Author: Lida <hovhannisyanlida030@gmail.com>
+Date:   Thu Jan 26 22:03:29 2023 +0400
+
+    add card component
+
+[33mcommit c88a83007b79d1cf007599a5b3a4125a670e988b[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmaster[m[33m)[m
+Merge: 88d7045 350363c
+Author: RMxitaryan <121054359+RMxitaryan@users.noreply.github.com>
+Date:   Thu Jan 26 16:46:11 2023 +0300
+
+    Merge pull request #7 from RMxitaryan/add-firebase
+    
+    added firebase
+
+[33mcommit 350363cfad56db83c73ce49c8998c063ce5009a4[m[33m ([m[1;31morigin/add-firebase[m[33m)[m
+Author: RMxitaryan <romanmxitaryan12@gmail.com>
+Date:   Thu Jan 26 17:45:15 2023 +0300
+
+    added firebase
+
+[33mcommit 88d704568eb0a0d2057e0c185df590172ba8aabf[m
+Merge: 2da355e 4699690
+Author: Tigran Gevorgyan <89584288+Tiko-1@users.noreply.github.com>
+Date:   Thu Jan 26 15:30:03 2023 +0400
+
+    Merge pull request #6 from RMxitaryan/added-navbar-and-corrected-router
+    
+    added navbar component and corrected router
+
+[33mcommit 46996909a8e5a5d556c61bce6c462be40c352969[m[33m ([m[1;31morigin/added-navbar-and-corrected-router[m[33m)[m
+Author: Tigran <gevorgyant05@gmail.com>
+Date:   Thu Jan 26 15:25:56 2023 +0400
+
+    added navbar component and corrected router
+
+[33mcommit 2da355eaef32d5489e3daff812d3be53a821ebf6[m
+Merge: 56cea62 1d7d4ad
+Author: Tigran Gevorgyan <89584288+Tiko-1@users.noreply.github.com>
+Date:   Thu Jan 26 02:00:31 2023 +0400
+
+    Merge pull request #5 from RMxitaryan/add-menu
+    
+    Add menu
+
+[33mcommit 1d7d4ad3cd5dde1ffb455710e9e8d06acc35850a[m[33m ([m[1;31morigin/add-menu[m[33m)[m
+Author: Tigran <gevorgyant05@gmail.com>
+Date:   Thu Jan 26 01:57:31 2023 +0400
+
+    added-menu
+
+[33mcommit 254fa777a833b22d610510fdc58679b089046262[m[33m ([m[1;31morigin/add-signIn-and-signUp-btns[m[33m)[m
+Author: Tigran <gevorgyant05@gmail.com>
+Date:   Thu Jan 26 00:16:20 2023 +0400
+
+    added sign in and sign signUp
+
+[33mcommit 541bc2f6744dc10b5d53a7066663096139ddad38[m
+Merge: 0cb7817 56cea62
+Author: Tigran <gevorgyant05@gmail.com>
+Date:   Thu Jan 26 00:09:25 2023 +0400
+
+    Merge branch 'master' of https://github.com/RMxitaryan/online-shop into add-signIn-and-signUp-btns
+
+[33mcommit 0cb78172b232b1e48e5fed68fdb4d98bd5032a4b[m
+Author: Tigran <gevorgyant05@gmail.com>
+Date:   Wed Jan 25 23:59:40 2023 +0400
+
+    sign-in-sign-up
+
+[33mcommit 56cea62049b69334d93dcd3aaa336c9c1b064b46[m
+Merge: 80c14a0 72c8bea
+Author: Tigran Gevorgyan <89584288+Tiko-1@users.noreply.github.com>
+Date:   Wed Jan 25 23:58:11 2023 +0400
+
+    Merge pull request #3 from RMxitaryan/profile-icon
+    
+    added profile icon
+
+[33mcommit 72c8beac12938fc3714c255efab648db2df8a553[m[33m ([m[1;31morigin/profile-icon[m[33m)[m
+Author: RMxitaryan <romanmxitaryan12@gmail.com>
+Date:   Wed Jan 25 20:21:26 2023 +0300
+
+    added profile icon
+
+[33mcommit 80c14a065d897e2f1765ec57f901d01379a90741[m
+Merge: 71d5e38 5a22097
+Author: RMxitaryan <121054359+RMxitaryan@users.noreply.github.com>
+Date:   Tue Jan 24 17:08:53 2023 +0300
+
+    Merge pull request #2 from RMxitaryan/add-mui-slide-for-menu
+    
+    added-mui-slide-for-search
+
+[33mcommit 5a220977d0c93035e65c75f5ae76559d8b5f762c[m[33m ([m[1;31morigin/add-mui-slide-for-search[m[33m)[m
+Author: Tigran <gevorgyant05@gmail.com>
+Date:   Tue Jan 24 17:38:53 2023 +0400
+
+    added-mui-slide-for-search
+
+[33mcommit 71d5e38b50b86ab900b65c75ef98622edeeeae32[m
+Merge: c0ffa43 7cd62a1
+Author: Tigran Gevorgyan <89584288+Tiko-1@users.noreply.github.com>
+Date:   Mon Jan 23 20:48:59 2023 +0400
+
+    Merge pull request #1 from RMxitaryan/Search-btn-click-action
+    
+    added Router and search
+
+[33mcommit 7cd62a140f1dda0715d4d6b09b69b2b5fb812120[m[33m ([m[1;31morigin/Search-btn-click-action[m[33m)[m
+Author: Tigran <gevorgyant05@gmail.com>
+Date:   Mon Jan 23 20:47:12 2023 +0400
+
+    added Router and search
+
+[33mcommit c0ffa430ecc40758cf463869ec7c1fead42dc5ce[m
+Author: RMxitaryan <romanmxitaryan12@gmail.com>
+Date:   Sat Jan 21 14:04:28 2023 +0300
+
+    first commit
+
+[33mcommit 8a9fc418fd80ed5e9e53afafae0d4577f3093a9d[m
+Author: RMxitaryan <romanmxitaryan12@gmail.com>
+Date:   Fri Jan 20 20:46:22 2023 +0300
+
+    Initialize project using Create React App
