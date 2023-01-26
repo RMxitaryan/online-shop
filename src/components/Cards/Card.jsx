@@ -1,6 +1,8 @@
 import { createUseStyles } from "react-jss";
 import { Link } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
+import CheckIcon from "@mui/icons-material/Check";
+import { useState } from "react";
 
 const useStyles = createUseStyles({
   cardContainer: {
@@ -53,6 +55,28 @@ const useStyles = createUseStyles({
       backgroundColor: "#ef6f2e",
     },
   },
+  addedItem: {
+    position: "absolute",
+    color: "white",
+    pointerEvents: "auto",
+    top: "10px",
+    left: "90%",
+    padding: "0",
+    backgroundColor: "transparent",
+    border: "none",
+    transition: "all .2s ease-out",
+    width: "20px",
+    margin: "0",
+    borderRadius: "27.5px",
+    backgroundColor: "#ef6f2e",
+    "&:hover": {
+      cursor: "pointer",
+      transform: "scale(1.5)",
+      borderRadius: "27.5px",
+      transition: "opacity .3s ease 0s,background-color .3s ease 0s",
+    },
+  },
+
   cardFooter: {
     position: "relative",
     paddingBottom: "5px",
@@ -88,17 +112,28 @@ const useStyles = createUseStyles({
 
 export const Card = () => {
   const classes = useStyles();
+  const [isAdd, setIsAdd] = useState(false);
+
+  const handelAddClick = () => {
+    setIsAdd(!isAdd);
+  };
   return (
     <article className={classes.cardContainer}>
       <div className={classes.pictureWrapper}>
         <Link>
           <img
             className={classes.pictureSizes}
-            src="./img/cardItem.png"
+            src="img/cardItem.png"
             alt="item"
           />
         </Link>
-        <AddIcon className={classes.addIcon} />
+        <div onClick={handelAddClick}>
+          {isAdd ? (
+            <CheckIcon className={classes.addedItem} />
+          ) : (
+            <AddIcon className={classes.addIcon} />
+          )}
+        </div>
       </div>
       <footer className={classes.cardFooter}>
         <div>
