@@ -4,13 +4,10 @@ import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/database";
 import { createUseStyles } from "react-jss";
-import { borderColor } from "@mui/system";
 import { useNavigate } from "react-router";
-import { set } from "@firebase/database";
-
 
 const useStyles = createUseStyles({
-  signInDialog: {
+  signUpDialog: {
     marginTop: "3%",
     display: "flex",
     flexDirection: "column",
@@ -20,7 +17,7 @@ const useStyles = createUseStyles({
     borderStyle: "solid",
     borderColor: "rgb(46 40 38 / 80%)",
   },
-  signInContent: {
+  signUpContent: {
     width: "400px",
     height: "400px",
     backgroundColor: "rgb(46 40 38 / 80%)",
@@ -30,12 +27,13 @@ const useStyles = createUseStyles({
     alignItems: "center",
     justifyContent: "space-evenly",
   },
-  signInDialogActions: {
+  signUpDialogActions: {
     backgroundColor: "rgb(46 40 38 / 80%)",
     width: "100%",
-    opacity: 0.8,
     display: "flex",
     justifyContent: "space-around",
+
+    opacity: 0.8,
   },
   PrimaryButton: {
     color: "white",
@@ -47,13 +45,13 @@ const useStyles = createUseStyles({
       color: "black",
     },
   },
-  signInInputs: {
+  signUpInputs: {
     flex: 0.7,
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-evenly",
   },
-  signInInput: {
+  signUpInput: {
     borderRadius: "25px",
     border: "none",
     width: "200px",
@@ -65,42 +63,50 @@ const useStyles = createUseStyles({
   },
 });
 
-function SignIn() {
+function SignUp() {
   const [email, setEmail] = useState("");
+  const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const classes = useStyles();
 
-  const onSignIn = () => {
+  const onSignUp = () => {
     firebase
       .auth()
-      .signInWithEmailAndPassword(email, password)
-      .then(
-        () => {
-          setEmail("");
-          setPassword("");
-          return navigate("/");
-        },
-        (e) => {
-          setError("Invalid email or password");
-        }
-      );
+      .createUserWithEmailAndPassword(email, password)
+      .then(() => {
+        setEmail("");
+        setUserName("");
+        setPassword("");
+        return navigate("/signin");
+      })
+      .catch((error) => setError("Invalid email or password"));
   };
+
   return (
-    <div className={classes.signInDialog}>
-      <div className={classes.signInContent}>
-        <h1 style={{ color: "white" }}>Sign In</h1>
-        <div className={classes.signInInputs}>
+    <div className={classes.signUpDialog}>
+      <div className={classes.signUpContent}>
+        <h4 style={{ color: "white" }}>Sign Up</h4>
+        <div className={classes.signUpInputs}>
           <input
-            type="text"
+            type="email"
             value={email}
             onChange={(e) => {
               setEmail(e.target.value);
             }}
             placeholder="Email"
-            className={classes.signInInput}
+            className={classes.signUpInput}
           />
+          {/* <input
+                type="text"
+                value={userName}
+                onChange={(e) => {
+                  setUserName(e.target.value);
+                }}
+                placeholder="Username"
+                className={classes.signUpInput}
+              /> */}
           <input
             type="password"
             value={password}
@@ -108,20 +114,19 @@ function SignIn() {
               setPassword(e.target.value);
             }}
             placeholder="Password"
-            className={classes.signInInput}
+            className={classes.signUpInput}
           />
         </div>
         <div className={classes.error}>{error}</div>
       </div>
-
-      <div className={classes.signInDialogActions}>
+      <div className={classes.signUpDialogActions}>
         <div>
           <PrimaryButton
-            onClick={onSignIn}
+            onClick={onSignUp}
             className={classes.PrimaryButton}
             variant="text"
           >
-            Sign In
+            Sign Up
           </PrimaryButton>
         </div>
       </div>
@@ -129,4 +134,4 @@ function SignIn() {
   );
 }
 
-export default SignIn;
+export default SignUp;
