@@ -8,6 +8,8 @@ import Navbar from "./components/Navbar/Navbar";
 import { useEffect, useState } from "react";
 import { RingLoader } from "react-spinners";
 import { height } from "@mui/system";
+import SignIn from "./components/SignIn/SignIn";
+import SignUp from "./components/SignUp/SignUp";
 
 const useStyles = createUseStyles({
   app: {
@@ -114,6 +116,8 @@ function App() {
             <Route path="profile" element={<Profile />} />
             <Route path="favourite" element={<Favourite />} />
             <Route path="about" element={<About />} />
+            <Route path="signin" element={<SignIn />} />
+            <Route path="signup" element={<SignUp />} />
           </Route>
         </Routes>
       )}
