@@ -8,6 +8,10 @@ import { createUseStyles } from "react-jss";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/database";
+import { useDispatch, useSelector } from "react-redux";
+import { selectUser } from "../../redux/user/selector";
+import { setUser } from "../../redux/user/actions";
+
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -67,6 +71,9 @@ function SignUpDialog({ open, handleClose }) {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
 
+  const currentUser = useSelector(selectUser);
+  const dispatch = useDispatch();
+
   const classes = useStyles();
 
   const onSignUp = () => {
@@ -74,10 +81,11 @@ function SignUpDialog({ open, handleClose }) {
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then(
-        () => {
+        (auth) => {
           setEmail("");
           setUserName("");
           setPassword("");
+          dispatch(setUser(auth.user.email));
           handleClose();
         },
         () => {
@@ -85,7 +93,7 @@ function SignUpDialog({ open, handleClose }) {
         }
       );
   };
-
+  console.log(currentUser);
   return (
     <Dialog
       className={classes.Dialog}
