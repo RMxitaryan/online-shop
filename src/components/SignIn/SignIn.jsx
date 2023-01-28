@@ -11,7 +11,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../../redux/user/selector";
 import { setUser } from "../../redux/user/actions";
 
-
 const useStyles = createUseStyles({
   signInDialog: {
     marginTop: "3%",
@@ -73,7 +72,9 @@ function SignIn() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const classes = useStyles();
+
   // const currentUser = useSelector(selectUser);
   // const dispatch = useDispatch();
 
@@ -85,7 +86,7 @@ function SignIn() {
         (auth) => {
           setEmail("");
           setPassword("");
-          // dispatch(setUser({ email: auth.user.email }));
+          dispatch(setUser({ email: auth.user.email }));
           return navigate("/");
         },
         (e) => {
@@ -93,7 +94,7 @@ function SignIn() {
         }
       );
   };
-  console.log(currentUser);
+
   return (
     <div className={classes.signInDialog}>
       <div className={classes.signInContent}>
