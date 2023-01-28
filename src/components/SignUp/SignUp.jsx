@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../../redux/user/selector";
 import { setUser } from "../../redux/user/actions";
 
+
 const useStyles = createUseStyles({
   signUpDialog: {
     marginTop: "3%",
@@ -76,6 +77,10 @@ function SignUp() {
   const classes = useStyles();
   const currentUser = useSelector(selectUser);
   const dispatch = useDispatch();
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const classes = useStyles();
+
 
   const onSignUp = () => {
     firebase
@@ -108,6 +113,7 @@ function SignUp() {
             className={classes.signUpInput}
           />
           <input
+
             type="email"
             value={email}
             onChange={(e) => {
@@ -116,6 +122,16 @@ function SignUp() {
             placeholder="Email"
             className={classes.signUpInput}
           />
+          {/* <input
+                type="text"
+                value={userName}
+                onChange={(e) => {
+                  setUserName(e.target.value);
+                }}
+                placeholder="Username"
+                className={classes.signUpInput}
+              /> */}
+
           <input
             type="password"
             value={password}
@@ -140,6 +156,7 @@ function SignUp() {
             The password confirmation does not match
           </span>
         ) : null}
+        </div>
         <div className={classes.error}>{error}</div>
       </div>
       <div className={classes.signUpDialogActions}>
