@@ -1,3 +1,5 @@
+import React, { useState } from 'react';
+import Account from './components/SettingsLeftBar/SettBarRoutes/Account';
 import { createUseStyles } from 'react-jss';
 import { Route, Routes, Outlet } from 'react-router-dom';
 import Home from './components/HomePage/Home';
@@ -5,9 +7,12 @@ import Profile from './components/ProfileIcon/Profile';
 import Favourite from './components/ProfileIcon/Favourite';
 import About from './components/ProfileIcon/About';
 import Navbar from './components/Navbar/Navbar';
-import { useState } from 'react';
-import AccSettBar from './components/SettingsLeftBar/AccSettBar';
-import Account from './components/SettingsLeftBar/SettBarRoutes/Account';
+import { useEffect, useState } from 'react';
+import { RingLoader } from 'react-spinners';
+import { height } from '@mui/system';
+import SignIn from './components/SignIn/SignIn';
+import SignUp from './components/SignUp/SignUp';
+
 const useStyles = createUseStyles({
 	app: {
 		display: 'flex',
@@ -15,6 +20,14 @@ const useStyles = createUseStyles({
 		width: '100%',
 		height: '100%',
 		marginRight: 0,
+		justifyContent: 'center',
+		alignItems: 'center',
+	},
+	loading: {
+		color: '#ef6f2e',
+		justifyContent: 'center',
+		alignItems: 'center',
+		marginTop: '300px',
 	},
 });
 
@@ -24,6 +37,15 @@ function App() {
 	const [signInDialogOpen, setSignInDialogOpen] = useState(false);
 	const [isOpenMenu, setIsOpenMenu] = useState(false);
 	const [openHome, setOpenHome] = useState(true);
+	const [loading, setLoading] = useState(false);
+
+	useEffect(() => {
+		setLoading(true);
+		setTimeout(() => {
+			setLoading(false);
+		}, 6000);
+	}, []);
+
 	const handleSignUpClickOpen = () => {
 		// setSignInDialogOpen(false);
 		setSignUpDialogOpen(true);
@@ -53,47 +75,56 @@ function App() {
 	const classes = useStyles();
 	return (
 		<div className={classes.app}>
-			<Routes>
-				<Route
-					path="/"
-					element={
-						<Navbar
-							handelClickMenuBar={handelClickMenuBar}
-							setOpenHome={setOpenHome}
-							handleSignInClickOpen={handleSignInClickOpen}
-							handleSignUpClickOpen={handleSignUpClickOpen}
-							handleSearchClickOpen={handleSearchClickOpen}
-						/>
-					}
-				>
+			{loading ? (
+				<RingLoader
+					color={'#ef6f2e'}
+					loading={loading}
+					size={150}
+					className={classes.loading}
+				/>
+			) : (
+				<Routes>
 					<Route
-						index
+						path="/"
 						element={
-							<Home
-								setIsOpenMenu={setIsOpenMenu}
-								isOpenMenu={isOpenMenu}
-								openHome={openHome}
-								signInDialogOpen={signInDialogOpen}
-								handleSignInClose={handleSignInClose}
+							<Navbar
+								handelClickMenuBar={handelClickMenuBar}
+								setOpenHome={setOpenHome}
 								handleSignInClickOpen={handleSignInClickOpen}
-								signUpDialogOpen={signUpDialogOpen}
-								handleSignUpClose={handleSignUpClose}
-								handleSearchClickOpen={handleSearchClickOpen}
-								handleSearchClose={handleSearchClose}
 								handleSignUpClickOpen={handleSignUpClickOpen}
-								searchDialogOpen={searchDialogOpen}
+								handleSearchClickOpen={handleSearchClickOpen}
 							/>
 						}
-					/>
-					<Route path="profile" element={<Profile />} />
-					<Route path="favourite" element={<Favourite />} />
-					<Route path="about" element={<About />} />
-					<Route
-						path="profile/account"
-						element={<Account name="Tigran" surname="Gevorgyan" />}
-					/>
-				</Route>
-			</Routes>
+					>
+						<Route
+							index
+							element={
+								<Home
+									setIsOpenMenu={setIsOpenMenu}
+									isOpenMenu={isOpenMenu}
+									openHome={openHome}
+									signInDialogOpen={signInDialogOpen}
+									handleSignInClose={handleSignInClose}
+									handleSignInClickOpen={handleSignInClickOpen}
+									signUpDialogOpen={signUpDialogOpen}
+									handleSignUpClose={handleSignUpClose}
+									handleSearchClickOpen={handleSearchClickOpen}
+									handleSearchClose={handleSearchClose}
+									handleSignUpClickOpen={handleSignUpClickOpen}
+									searchDialogOpen={searchDialogOpen}
+								/>
+							}
+						/>
+						<Route path="profile" element={<Profile />} />
+						<Route path="favourite" element={<Favourite />} />
+						<Route path="about" element={<About />} />
+						<Route
+							path="profile/account"
+							element={<Account name="Tigran" surname="Gevorgyan" />}
+						/>
+					</Route>
+				</Routes>
+			)}
 		</div>
 	);
 }

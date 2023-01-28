@@ -7,7 +7,8 @@ import { BrowserRouter } from 'react-router-dom';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/database';
-
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
 const firebaseConfig = {
 	apiKey: 'AIzaSyCt1AdV22OrgmirQNOn54vFVbkywPvziNg',
 	authDomain: 'online-shop-e417e.firebaseapp.com',
@@ -25,9 +26,11 @@ firebase.initializeApp(firebaseConfig);
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
 	<React.StrictMode>
-		<BrowserRouter>
-			<App />
-		</BrowserRouter>
+		<Provider store={store}>
+			<BrowserRouter>
+				<App />
+			</BrowserRouter>
+		</Provider>
 	</React.StrictMode>
 );
 

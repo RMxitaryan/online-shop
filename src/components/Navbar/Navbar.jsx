@@ -70,20 +70,12 @@ function Navbar({
 				</div>
 				<div className={classes.headerTopRight}>
 					<ProfileIcon setOpenHome={setOpenHome} />
-					<PrimaryButton
-						onClick={handleSignInClickOpen}
-						disabled={false}
-						variant="text"
-					>
-						sign in
-					</PrimaryButton>
-					<PrimaryButton
-						onClick={handleSignUpClickOpen}
-						disabled={false}
-						variant="text"
-					>
-						sign up
-					</PrimaryButton>
+					<Link to="signin">
+						<PrimaryButton>sign in</PrimaryButton>
+					</Link>
+					<Link to="signup">
+						<PrimaryButton>sign up</PrimaryButton>
+					</Link>
 					<img src="/img/bag.png" width={23} height={23} />
 					<img
 						src="/img/search.png"
@@ -94,9 +86,7 @@ function Navbar({
 					/>
 				</div>
 			</div>
-			<div>
-				<Outlet />
-			</div>
+			<Outlet />
 		</>
 	);
 }
