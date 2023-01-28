@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Account from './components/SettingsLeftBar/SettBarRoutes/Account';
 import { createUseStyles } from 'react-jss';
 import { Route, Routes, Outlet } from 'react-router-dom';
@@ -7,7 +7,7 @@ import Profile from './components/ProfileIcon/Profile';
 import Favourite from './components/ProfileIcon/Favourite';
 import About from './components/ProfileIcon/About';
 import Navbar from './components/Navbar/Navbar';
-import { useEffect, useState } from 'react';
+
 import { RingLoader } from 'react-spinners';
 import { height } from '@mui/system';
 import SignIn from './components/SignIn/SignIn';
