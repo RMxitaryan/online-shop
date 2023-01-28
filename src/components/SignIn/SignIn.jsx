@@ -7,6 +7,9 @@ import { createUseStyles } from "react-jss";
 import { borderColor } from "@mui/system";
 import { useNavigate } from "react-router";
 import { set } from "@firebase/database";
+import { useDispatch, useSelector } from "react-redux";
+import { selectUser } from "../../redux/user/selector";
+import { setUser } from "../../redux/user/actions";
 
 
 const useStyles = createUseStyles({
@@ -71,15 +74,18 @@ function SignIn() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const classes = useStyles();
+  // const currentUser = useSelector(selectUser);
+  // const dispatch = useDispatch();
 
   const onSignIn = () => {
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then(
-        () => {
+        (auth) => {
           setEmail("");
           setPassword("");
+          // dispatch(setUser({ email: auth.user.email }));
           return navigate("/");
         },
         (e) => {
@@ -87,6 +93,7 @@ function SignIn() {
         }
       );
   };
+  console.log(currentUser);
   return (
     <div className={classes.signInDialog}>
       <div className={classes.signInContent}>

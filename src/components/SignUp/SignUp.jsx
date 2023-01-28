@@ -5,6 +5,10 @@ import "firebase/compat/auth";
 import "firebase/compat/database";
 import { createUseStyles } from "react-jss";
 import { useNavigate } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { selectUser } from "../../redux/user/selector";
+import { setUser } from "../../redux/user/actions";
+
 
 const useStyles = createUseStyles({
   signUpDialog: {
@@ -67,18 +71,28 @@ function SignUp() {
   const [email, setEmail] = useState("");
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const classes = useStyles();
+  const currentUser = useSelector(selectUser);
+  const dispatch = useDispatch();
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const classes = useStyles();
+
 
   const onSignUp = () => {
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
-      .then(() => {
+      .then((auth) => {
+        let current = { userName };
         setEmail("");
         setUserName("");
         setPassword("");
+        setConfirmPassword("");
+        dispatch(setUser({ ...current, email: auth.user.email }));
         return navigate("/signin");
       })
       .catch((error) => setError("Invalid email or password"));
@@ -90,6 +104,16 @@ function SignUp() {
         <h4 style={{ color: "white" }}>Sign Up</h4>
         <div className={classes.signUpInputs}>
           <input
+            type="text"
+            value={userName}
+            onChange={(e) => {
+              setUserName(e.target.value);
+            }}
+            placeholder="Username"
+            className={classes.signUpInput}
+          />
+          <input
+
             type="email"
             value={email}
             onChange={(e) => {
@@ -107,6 +131,7 @@ function SignUp() {
                 placeholder="Username"
                 className={classes.signUpInput}
               /> */}
+
           <input
             type="password"
             value={password}
@@ -116,6 +141,21 @@ function SignUp() {
             placeholder="Password"
             className={classes.signUpInput}
           />
+          <input
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => {
+              setConfirmPassword(e.target.value);
+            }}
+            placeholder="Confirm password"
+            className={classes.signUpInput}
+          />
+        </div>
+        {password !== confirmPassword ? (
+          <span className={classes.error}>
+            The password confirmation does not match
+          </span>
+        ) : null}
         </div>
         <div className={classes.error}>{error}</div>
       </div>

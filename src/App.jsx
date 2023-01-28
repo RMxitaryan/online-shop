@@ -41,7 +41,7 @@ function App() {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-    }, 10);
+    }, 6000);
   }, []);
 
   const handleSignUpClickOpen = () => {
