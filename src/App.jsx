@@ -6,7 +6,8 @@ import Favourite from './components/ProfileIcon/Favourite';
 import About from './components/ProfileIcon/About';
 import Navbar from './components/Navbar/Navbar';
 import { useState } from 'react';
-
+import AccSettBar from './components/SettingsLeftBar/AccSettBar';
+import Account from './components/SettingsLeftBar/SettBarRoutes/Account';
 const useStyles = createUseStyles({
 	app: {
 		display: 'flex',
@@ -87,6 +88,10 @@ function App() {
 					<Route path="profile" element={<Profile />} />
 					<Route path="favourite" element={<Favourite />} />
 					<Route path="about" element={<About />} />
+					<Route
+						path="profile/account"
+						element={<Account name="Tigran" surname="Gevorgyan" />}
+					/>
 				</Route>
 			</Routes>
 		</div>
