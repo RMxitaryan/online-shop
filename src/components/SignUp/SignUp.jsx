@@ -4,15 +4,13 @@ import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/database";
 import { createUseStyles } from "react-jss";
-import { borderColor } from "@mui/system";
 import { useNavigate } from "react-router";
-import { set } from "@firebase/database";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../../redux/user/selector";
 import { setUser } from "../../redux/user/actions";
 
 const useStyles = createUseStyles({
-  signInDialog: {
+  signUpDialog: {
     marginTop: "3%",
     display: "flex",
     flexDirection: "column",
@@ -22,7 +20,7 @@ const useStyles = createUseStyles({
     borderStyle: "solid",
     borderColor: "rgb(46 40 38 / 80%)",
   },
-  signInContent: {
+  signUpContent: {
     width: "400px",
     height: "400px",
     backgroundColor: "rgb(46 40 38 / 80%)",
@@ -32,12 +30,13 @@ const useStyles = createUseStyles({
     alignItems: "center",
     justifyContent: "space-evenly",
   },
-  signInDialogActions: {
+  signUpDialogActions: {
     backgroundColor: "rgb(46 40 38 / 80%)",
     width: "100%",
-    opacity: 0.8,
     display: "flex",
     justifyContent: "space-around",
+
+    opacity: 0.8,
   },
   PrimaryButton: {
     color: "white",
@@ -49,13 +48,13 @@ const useStyles = createUseStyles({
       color: "black",
     },
   },
-  signInInputs: {
+  signUpInputs: {
     flex: 0.7,
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-evenly",
   },
-  signInInput: {
+  signUpInput: {
     borderRadius: "25px",
     border: "none",
     width: "200px",
@@ -67,45 +66,55 @@ const useStyles = createUseStyles({
   },
 });
 
-function SignIn() {
+function SignUp() {
   const [email, setEmail] = useState("");
+  const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const classes = useStyles();
-  // const currentUser = useSelector(selectUser);
-  // const dispatch = useDispatch();
+  const currentUser = useSelector(selectUser);
+  const dispatch = useDispatch();
 
-  const onSignIn = () => {
+  const onSignUp = () => {
     firebase
       .auth()
-      .signInWithEmailAndPassword(email, password)
-      .then(
-        (auth) => {
-          setEmail("");
-          setPassword("");
-          // dispatch(setUser({ email: auth.user.email }));
-          return navigate("/");
-        },
-        (e) => {
-          setError("Invalid email or password");
-        }
-      );
+      .createUserWithEmailAndPassword(email, password)
+      .then((auth) => {
+        let current = { userName };
+        setEmail("");
+        setUserName("");
+        setPassword("");
+        setConfirmPassword("");
+        dispatch(setUser({ ...current, email: auth.user.email }));
+        return navigate("/signin");
+      })
+      .catch((error) => setError("Invalid email or password"));
   };
-  console.log(currentUser);
+
   return (
-    <div className={classes.signInDialog}>
-      <div className={classes.signInContent}>
-        <h1 style={{ color: "white" }}>Sign In</h1>
-        <div className={classes.signInInputs}>
+    <div className={classes.signUpDialog}>
+      <div className={classes.signUpContent}>
+        <h4 style={{ color: "white" }}>Sign Up</h4>
+        <div className={classes.signUpInputs}>
           <input
             type="text"
+            value={userName}
+            onChange={(e) => {
+              setUserName(e.target.value);
+            }}
+            placeholder="Username"
+            className={classes.signUpInput}
+          />
+          <input
+            type="email"
             value={email}
             onChange={(e) => {
               setEmail(e.target.value);
             }}
             placeholder="Email"
-            className={classes.signInInput}
+            className={classes.signUpInput}
           />
           <input
             type="password"
@@ -114,20 +123,33 @@ function SignIn() {
               setPassword(e.target.value);
             }}
             placeholder="Password"
-            className={classes.signInInput}
+            className={classes.signUpInput}
+          />
+          <input
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => {
+              setConfirmPassword(e.target.value);
+            }}
+            placeholder="Confirm password"
+            className={classes.signUpInput}
           />
         </div>
+        {password !== confirmPassword ? (
+          <span className={classes.error}>
+            The password confirmation does not match
+          </span>
+        ) : null}
         <div className={classes.error}>{error}</div>
       </div>
-
-      <div className={classes.signInDialogActions}>
+      <div className={classes.signUpDialogActions}>
         <div>
           <PrimaryButton
-            onClick={onSignIn}
+            onClick={onSignUp}
             className={classes.PrimaryButton}
             variant="text"
           >
-            Sign In
+            Sign Up
           </PrimaryButton>
         </div>
       </div>
@@ -135,4 +157,4 @@ function SignIn() {
   );
 }
 
-export default SignIn;
+export default SignUp;

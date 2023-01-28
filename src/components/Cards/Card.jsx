@@ -113,6 +113,7 @@ const useStyles = createUseStyles({
 export const Card = () => {
   const classes = useStyles();
   const [isAdd, setIsAdd] = useState(false);
+  const [openSignUp, setOpenSignUp] = useState(false);
 
   const handelAddClick = () => {
     setIsAdd(!isAdd);

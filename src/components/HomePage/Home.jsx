@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import React, { useState } from "react";
 import FullScreenDialog from "../Search/SearchDialog";
 import SignUpDialog from "../SignUp/SignUpDialog";
-import SignInDialog from "../SignIn/SignIn";
+import SignInDialog from "../SignIn/SignInDialog";
 import MenuBar from "../Menu/MenuBar";
 import CarouselBox from "../CarouselBox";
 import Navbar from "../Navbar/Navbar";
