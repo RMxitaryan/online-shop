@@ -8,6 +8,7 @@ import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../../redux/user/selector";
 import { setUser } from "../../redux/user/actions";
+import { addUsersFirebase } from "../../config/Config";
 
 const useStyles = createUseStyles({
   signUpDialog: {
@@ -84,6 +85,7 @@ function SignUp() {
         setEmail("");
         setUserName("");
         setPassword("");
+        addUsersFirebase(userName, email, password);
         // dispatch(setUser({ email: auth.user.email }));
         return navigate("/signin");
       })

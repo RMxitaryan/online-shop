@@ -10,6 +10,8 @@ import { RingLoader } from "react-spinners";
 import { height } from "@mui/system";
 import SignIn from "./components/SignIn/SignIn";
 import SignUp from "./components/SignUp/SignUp";
+import { getFirestore, collection, getDocs } from "firebase/firestore";
+import { addUsersFirebase } from "./config/Config";
 
 const useStyles = createUseStyles({
   app: {
@@ -44,6 +46,18 @@ function App() {
     }, 6000);
   }, []);
 
+  // const db = getFirestore();
+  // const colRef = collection(db, "SignedUpUsers");
+  // getDocs(colRef)
+  //   .then((snapshot) => {
+  //     let users = [];
+  //     snapshot.docs.forEach((doc) => {
+  //       users.push({ ...doc.data(), id: doc.id });
+  //     });
+  //     console.log(users);
+  //     console.log("kkk");
+  //   })
+  //   .catch((err) => console.log(err));
   const handleSignUpClickOpen = () => {
     // setSignInDialogOpen(false);
     setSignUpDialogOpen(true);
