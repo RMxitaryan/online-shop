@@ -10,7 +10,6 @@ import { set } from '@firebase/database';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectUser } from '../../redux/user/selector';
 import { setUser } from '../../redux/user/actions';
-
 const useStyles = createUseStyles({
 	signInDialog: {
 		marginTop: '3%',
@@ -63,19 +62,17 @@ const useStyles = createUseStyles({
 		padding: '10px',
 	},
 	error: {
-		color: '#ff0000',
+		color: '#FF0000',
 	},
 });
-
 function SignIn() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [error, setError] = useState('');
 	const navigate = useNavigate();
 	const classes = useStyles();
-	const currentUser = useSelector(selectUser);
-	const dispatch = useDispatch();
-
+	// const currentUser = useSelector(selectUser);
+	// const dispatch = useDispatch();
 	const onSignIn = () => {
 		firebase
 			.auth()
@@ -84,15 +81,14 @@ function SignIn() {
 				(auth) => {
 					setEmail('');
 					setPassword('');
-					dispatch(setUser({ email: auth.user.email }));
-					return navigate('/');
+					// dispatch(setUser({ email: auth.user.email }));
+					return navigate('profile');
 				},
 				(e) => {
 					setError('Invalid email or password');
 				}
 			);
 	};
-	console.log(currentUser);
 	return (
 		<div className={classes.signInDialog}>
 			<div className={classes.signInContent}>
@@ -119,7 +115,6 @@ function SignIn() {
 				</div>
 				<div className={classes.error}>{error}</div>
 			</div>
-
 			<div className={classes.signInDialogActions}>
 				<div>
 					<PrimaryButton
@@ -134,5 +129,4 @@ function SignIn() {
 		</div>
 	);
 }
-
 export default SignIn;

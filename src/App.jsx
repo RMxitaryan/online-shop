@@ -115,13 +115,15 @@ function App() {
 								/>
 							}
 						/>
-						<Route path="profile" element={<Profile />} />
+						<Route path="signin/profile" element={<Account />} />
 						<Route path="favourite" element={<Favourite />} />
 						<Route path="about" element={<About />} />
-						<Route
+						<Route path="signin" element={<SignIn />} />
+						<Route path="signup" element={<SignUp />} />
+						{/* <Route
 							path="profile/account"
 							element={<Account name="Tigran" surname="Gevorgyan" />}
-						/>
+						/> */}
 					</Route>
 				</Routes>
 			)}

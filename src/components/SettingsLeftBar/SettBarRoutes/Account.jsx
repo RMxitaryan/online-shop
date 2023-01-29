@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AccSettBar from '../AccSettBar';
 import { makeStyles } from '@mui/styles';
 import { Button, TextField } from '@mui/material';
-
+import { useNavigate } from 'react-router-dom';
 const useStyles = makeStyles({
 	wrapper: {
 		display: 'flex',
 		height: '91vh',
+		color: 'white',
 	},
 	Account: {
 		width: '100%',
@@ -51,27 +52,67 @@ const useStyles = makeStyles({
 	actions: {
 		flex: 0.5,
 	},
+	textField: { backgroundColor: 'white', borderRadius: '5px' },
 });
 
 function Account({ name, surname }) {
 	const classes = useStyles();
+	const navigate = useNavigate();
+	const [user, setUser] = useState({
+		firstName: '',
+		lastName: '',
+		email: '',
+		phone: '',
+	});
+	const onUpdateClick = () => {
+		navigate('/');
+	};
+
 	return (
 		<div className={classes.wrapper}>
-			<AccSettBar name={name} surname={surname} />
+			{/* <AccSettBar name={name} surname={surname} /> */}
 			<div className={classes.Account}>
 				<h3 className={classes.title}>Account Settings</h3>
 				<div className={classes.form}>
 					<div className={classes.formEvens}>
 						<h5>First Name</h5>
-						<TextField className={classes.textField} variant="outlined" />
+						<TextField
+							value={user.firstName}
+							onChange={(e) => {
+								setUser({ ...user, firstName: e.target.value });
+							}}
+							className={classes.textField}
+							variant="outlined"
+						/>
 						<h5>Email</h5>
-						<TextField className={classes.textField} variant="outlined" />
+						<TextField
+							value={user.email}
+							onChange={(e) => {
+								setUser({ ...user, email: e.target.value });
+							}}
+							className={classes.textField}
+							variant="outlined"
+						/>
 					</div>
 					<div className={classes.formEvens}>
 						<h5>Last Name</h5>
-						<TextField className={classes.textField} variant="outlined" />
+						<TextField
+							value={user.lastName}
+							onChange={(e) => {
+								setUser({ ...user, lastName: e.target.value });
+							}}
+							className={classes.textField}
+							variant="outlined"
+						/>
 						<h5>Phone number</h5>
-						<TextField className={classes.textField} variant="outlined" />
+						<TextField
+							value={user.phone}
+							onChange={(e) => {
+								setUser({ ...user, phone: e.target.value });
+							}}
+							className={classes.textField}
+							variant="outlined"
+						/>
 					</div>
 				</div>
 				<div className={classes.descripton}>
@@ -84,7 +125,9 @@ function Account({ name, surname }) {
 					</p>
 				</div>
 				<div className={classes.actions}>
-					<Button className={classes.updateBtn}>Update</Button>
+					<Button onClick={onUpdateClick} className={classes.updateBtn}>
+						Update
+					</Button>
 					<Button className={classes.cancelBtn}>Cancel</Button>
 				</div>
 			</div>

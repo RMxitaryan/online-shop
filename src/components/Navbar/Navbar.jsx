@@ -34,15 +34,12 @@ const useStyles = createUseStyles({
 		},
 	},
 	headerTopLeft: { marginLeft: 15 },
+	link: {
+		textDecoration: 'none',
+	},
 });
 
-function Navbar({
-	handelClickMenuBar,
-	setOpenHome,
-	handleSignInClickOpen,
-	handleSignUpClickOpen,
-	handleSearchClickOpen,
-}) {
+function Navbar({ handelClickMenuBar, setOpenHome, handleSearchClickOpen }) {
 	const classes = useStyles();
 	return (
 		<>
@@ -57,7 +54,7 @@ function Navbar({
 					/>
 				</div>
 				<div className={classes.name}>
-					<Link to="/">
+					<Link to="/" className={classes.link}>
 						<img
 							src="/img/bork.jpg"
 							onClick={() => {
@@ -70,10 +67,10 @@ function Navbar({
 				</div>
 				<div className={classes.headerTopRight}>
 					<ProfileIcon setOpenHome={setOpenHome} />
-					<Link to="signin">
+					<Link to="signin" className={classes.link}>
 						<PrimaryButton>sign in</PrimaryButton>
 					</Link>
-					<Link to="signup">
+					<Link to="signup" className={classes.link}>
 						<PrimaryButton>sign up</PrimaryButton>
 					</Link>
 					<img src="/img/bag.png" width={23} height={23} />

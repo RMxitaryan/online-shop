@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectUser } from '../../redux/user/selector';
 import { setUser } from '../../redux/user/actions';
-
 const useStyles = createUseStyles({
 	signUpDialog: {
 		marginTop: '3%',
@@ -35,7 +34,6 @@ const useStyles = createUseStyles({
 		width: '100%',
 		display: 'flex',
 		justifyContent: 'space-around',
-
 		opacity: 0.8,
 	},
 	PrimaryButton: {
@@ -62,21 +60,19 @@ const useStyles = createUseStyles({
 		padding: '10px',
 	},
 	error: {
-		color: '#ff0000',
+		color: '#FF0000',
 	},
 });
-
 function SignUp() {
 	const [email, setEmail] = useState('');
 	const [userName, setUserName] = useState('');
 	const [password, setPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
-	const navigate = useNavigate();
-	const currentUser = useSelector(selectUser);
-	const dispatch = useDispatch();
 	const [error, setError] = useState('');
-
+	const navigate = useNavigate();
 	const classes = useStyles();
+	// const currentUser = useSelector(selectUser);
+	const dispatch = useDispatch();
 	const onSignUp = () => {
 		firebase
 			.auth()
@@ -92,66 +88,53 @@ function SignUp() {
 			})
 			.catch((error) => setError('Invalid email or password'));
 	};
-
 	return (
-		<>
-			<div className={classes.signUpDialog}>
-				<div className={classes.signUpContent}>
-					<h4 style={{ color: 'white' }}>Sign Up</h4>
-					<div className={classes.signUpInputs}>
-						<input
-							type="text"
-							value={userName}
-							onChange={(e) => {
-								setUserName(e.target.value);
-							}}
-							placeholder="Username"
-							className={classes.signUpInput}
-						/>
-						<input
-							type="email"
-							value={email}
-							onChange={(e) => {
-								setEmail(e.target.value);
-							}}
-							placeholder="Email"
-							className={classes.signUpInput}
-						/>
-						{/* <input
-                type="text"
-                value={userName}
-                onChange={(e) => {
-                  setUserName(e.target.value);
-                }}
-                placeholder="Username"
-                className={classes.signUpInput}
-              /> */}
-
-						<input
-							type="password"
-							value={password}
-							onChange={(e) => {
-								setPassword(e.target.value);
-							}}
-							placeholder="Password"
-							className={classes.signUpInput}
-						/>
-						<input
-							type="password"
-							value={confirmPassword}
-							onChange={(e) => {
-								setConfirmPassword(e.target.value);
-							}}
-							placeholder="Confirm password"
-							className={classes.signUpInput}
-						/>
-					</div>
-					{password !== confirmPassword ? (
-						<span className={classes.error}>
-							The password confirmation does not match
-						</span>
-					) : null}
+		<div className={classes.signUpDialog}>
+			<div className={classes.signUpContent}>
+				<h4 style={{ color: 'white' }}>Sign Up</h4>
+				<div className={classes.signUpInputs}>
+					<input
+						type="text"
+						value={userName}
+						onChange={(e) => {
+							setUserName(e.target.value);
+						}}
+						placeholder="Username"
+						className={classes.signUpInput}
+					/>
+					<input
+						type="email"
+						value={email}
+						onChange={(e) => {
+							setEmail(e.target.value);
+						}}
+						placeholder="Email"
+						className={classes.signUpInput}
+					/>
+					<input
+						type="password"
+						value={password}
+						onChange={(e) => {
+							setPassword(e.target.value);
+						}}
+						placeholder="Password"
+						className={classes.signUpInput}
+					/>
+					<input
+						type="password"
+						value={confirmPassword}
+						onChange={(e) => {
+							setConfirmPassword(e.target.value);
+						}}
+						placeholder="Confirm password"
+						className={classes.signUpInput}
+					/>
 				</div>
+				{password !== confirmPassword ? (
+					<span className={classes.error}>
+						The password confirmation does not match
+					</span>
+				) : null}
 				<div className={classes.error}>{error}</div>
 			</div>
 			<div className={classes.signUpDialogActions}>
@@ -165,8 +148,7 @@ function SignUp() {
 					</PrimaryButton>
 				</div>
 			</div>
-		</>
+		</div>
 	);
 }
-
 export default SignUp;
