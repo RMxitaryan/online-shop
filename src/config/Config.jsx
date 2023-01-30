@@ -1,7 +1,16 @@
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
-import "firebase/compat/firestore";
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  addDoc,
+  doc,
+  setDoc,
+} from "firebase/firestore";
 import "firebase/compat/storage";
+import { initializeApp } from "firebase/app";
+import { v4 as uuidv4 } from "uuid";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCt1AdV22OrgmirQNOn54vFVbkywPvziNg",
@@ -17,6 +26,27 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
+
 export const auth = firebase.auth();
-export const db = firebase.firestore();
-export const storage = firebase.storage();
+
+// const colRef = collection(db, "SignedUpUsers");
+// getDocs(colRef)
+//   .then((snapshot) => {
+//     let users = [];
+//     snapshot.docs.forEach((doc) => {
+//       users.push({ ...doc.data(), id: doc.id });
+//     });
+//     console.log(users);
+//   })
+//   .catch((err) => console.log(err.message));
+
+export const addUsersFirebase = (userName, email, password) => {
+  setDoc(doc(db, "SignedUpUsers", uuidv4()), {
+    userName: userName,
+    email: email,
+    password: password,
+  });
+};

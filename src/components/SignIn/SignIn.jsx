@@ -10,6 +10,7 @@ import { set } from '@firebase/database';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectUser } from '../../redux/user/selector';
 import { setUser } from '../../redux/user/actions';
+
 const useStyles = createUseStyles({
 	signInDialog: {
 		marginTop: '3%',
@@ -71,8 +72,8 @@ function SignIn() {
 	const [error, setError] = useState('');
 	const navigate = useNavigate();
 	const classes = useStyles();
-	// const currentUser = useSelector(selectUser);
-	// const dispatch = useDispatch();
+	const currentUser = useSelector(selectUser);
+	const dispatch = useDispatch();
 	const onSignIn = () => {
 		firebase
 			.auth()
@@ -81,7 +82,7 @@ function SignIn() {
 				(auth) => {
 					setEmail('');
 					setPassword('');
-					// dispatch(setUser({ email: auth.user.email }));
+					dispatch(setUser({ email: auth.user.email }));
 					return navigate('profile');
 				},
 				(e) => {

@@ -1,8 +1,12 @@
 import { createUseStyles } from 'react-jss';
 import { Link, Outlet } from 'react-router-dom';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PrimaryButton from '../Button/Button';
 import ProfileIcon from '../ProfileIcon/ProfileIcon';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectUser } from '../../redux/user/selector';
+import { auth } from '../../config/Config';
+import { setUser } from '../../redux/user/actions';
 
 const useStyles = createUseStyles({
 	header: {
@@ -24,7 +28,7 @@ const useStyles = createUseStyles({
 		display: 'flex',
 		alignItems: 'center',
 		justifyContent: 'space-between',
-		width: 250,
+		// width: currentUser.email ? 100 : 250,
 		marginRight: 12,
 	},
 
@@ -39,8 +43,22 @@ const useStyles = createUseStyles({
 	},
 });
 
-function Navbar({ handelClickMenuBar, setOpenHome, handleSearchClickOpen }) {
+function Navbar({
+	handelClickMenuBar,
+	setOpenHome,
+	handleSignInClickOpen,
+	handleSignUpClickOpen,
+	handleSearchClickOpen,
+}) {
 	const classes = useStyles();
+	const currentUser = useSelector(selectUser);
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		const email = auth.currentUser?.email;
+		dispatch(setUser({ email: email }));
+	}, []);
+
 	return (
 		<>
 			<div className={classes.header}>
@@ -54,7 +72,7 @@ function Navbar({ handelClickMenuBar, setOpenHome, handleSearchClickOpen }) {
 					/>
 				</div>
 				<div className={classes.name}>
-					<Link to="/" className={classes.link}>
+					<Link to="/">
 						<img
 							src="/img/bork.jpg"
 							onClick={() => {
@@ -65,14 +83,23 @@ function Navbar({ handelClickMenuBar, setOpenHome, handleSearchClickOpen }) {
 						/>
 					</Link>
 				</div>
-				<div className={classes.headerTopRight}>
-					<ProfileIcon setOpenHome={setOpenHome} />
-					<Link to="signin" className={classes.link}>
-						<PrimaryButton>sign in</PrimaryButton>
-					</Link>
-					<Link to="signup" className={classes.link}>
-						<PrimaryButton>sign up</PrimaryButton>
-					</Link>
+				<div
+					className={classes.headerTopRight}
+					style={{ width: currentUser.email ? '100px' : '250px' }}
+				>
+					{currentUser.email ? (
+						<ProfileIcon setOpenHome={setOpenHome} />
+					) : (
+						<>
+							<Link to="signin">
+								<PrimaryButton>sign in</PrimaryButton>
+							</Link>
+							<Link to="signup">
+								<PrimaryButton>sign up</PrimaryButton>
+							</Link>
+						</>
+					)}
+
 					<img src="/img/bag.png" width={23} height={23} />
 					<img
 						src="/img/search.png"

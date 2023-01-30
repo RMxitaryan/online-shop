@@ -8,6 +8,8 @@ import { useNavigate } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectUser } from '../../redux/user/selector';
 import { setUser } from '../../redux/user/actions';
+import { addUsersFirebase } from '../../config/Config';
+
 const useStyles = createUseStyles({
 	signUpDialog: {
 		marginTop: '3%',
@@ -67,27 +69,27 @@ function SignUp() {
 	const [email, setEmail] = useState('');
 	const [userName, setUserName] = useState('');
 	const [password, setPassword] = useState('');
-	const [confirmPassword, setConfirmPassword] = useState('');
+	const currentUser = useSelector(selectUser);
+	const dispatch = useDispatch();
 	const [error, setError] = useState('');
 	const navigate = useNavigate();
 	const classes = useStyles();
-	// const currentUser = useSelector(selectUser);
-	const dispatch = useDispatch();
+
 	const onSignUp = () => {
 		firebase
 			.auth()
 			.createUserWithEmailAndPassword(email, password)
 			.then((auth) => {
-				let current = { userName };
 				setEmail('');
 				setUserName('');
 				setPassword('');
-				setConfirmPassword('');
-				dispatch(setUser({ ...current, email: auth.user.email }));
+				addUsersFirebase(userName, email, password);
+				// dispatch(setUser({ email: auth.user.email }));
 				return navigate('/signin');
 			})
 			.catch((error) => setError('Invalid email or password'));
 	};
+
 	return (
 		<div className={classes.signUpDialog}>
 			<div className={classes.signUpContent}>
@@ -111,6 +113,7 @@ function SignUp() {
 						placeholder="Email"
 						className={classes.signUpInput}
 					/>
+
 					<input
 						type="password"
 						value={password}
@@ -120,23 +123,10 @@ function SignUp() {
 						placeholder="Password"
 						className={classes.signUpInput}
 					/>
-					<input
-						type="password"
-						value={confirmPassword}
-						onChange={(e) => {
-							setConfirmPassword(e.target.value);
-						}}
-						placeholder="Confirm password"
-						className={classes.signUpInput}
-					/>
 				</div>
-				{password !== confirmPassword ? (
-					<span className={classes.error}>
-						The password confirmation does not match
-					</span>
-				) : null}
 				<div className={classes.error}>{error}</div>
 			</div>
+
 			<div className={classes.signUpDialogActions}>
 				<div>
 					<PrimaryButton
