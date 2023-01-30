@@ -91,10 +91,10 @@ function Navbar({
 						<ProfileIcon setOpenHome={setOpenHome} />
 					) : (
 						<>
-							<Link to="signin">
+							<Link className={classes.link} to="signin">
 								<PrimaryButton>sign in</PrimaryButton>
 							</Link>
-							<Link to="signup">
+							<Link className={classes.link} to="signup">
 								<PrimaryButton>sign up</PrimaryButton>
 							</Link>
 						</>
