@@ -2,7 +2,7 @@ import * as React from "react";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { createUseStyles } from "react-jss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { auth } from "../../config/Config";
@@ -29,6 +29,7 @@ function ProfileIcon({ setOpenHome }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   //   auth.onAuthStateChanged((user) => {
   //     console.log(user.email);
@@ -67,7 +68,7 @@ function ProfileIcon({ setOpenHome }) {
           horizontal: "left",
         }}
       >
-        <Link to="/profile" className={classes.link}>
+        <Link to="signin/profile" className={classes.link}>
           {
             <MenuItem
               onClick={() => {
@@ -107,6 +108,7 @@ function ProfileIcon({ setOpenHome }) {
           onClick={() => {
             auth.signOut();
             dispatch(setUser({}));
+            return navigate("/");
           }}
         >
           Log out

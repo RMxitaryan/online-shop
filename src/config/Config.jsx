@@ -28,20 +28,19 @@ firebase.initializeApp(firebaseConfig);
 
 const app = initializeApp(firebaseConfig);
 
-const db = getFirestore(app);
+export const db = getFirestore(app);
 
 export const auth = firebase.auth();
 
-// const colRef = collection(db, "SignedUpUsers");
-// getDocs(colRef)
-//   .then((snapshot) => {
-//     let users = [];
-//     snapshot.docs.forEach((doc) => {
-//       users.push({ ...doc.data(), id: doc.id });
-//     });
-//     console.log(users);
-//   })
-//   .catch((err) => console.log(err.message));
+const colRef = collection(db, "Images");
+getDocs(colRef)
+  .then((snapshot) => {
+    let users = [];
+    snapshot.docs.forEach((doc) => {
+      users.push({ ...doc.data(), id: doc.id });
+    });
+  })
+  .catch((err) => console.log(err.message));
 
 export const addUsersFirebase = (userName, email, password) => {
   setDoc(doc(db, "SignedUpUsers", uuidv4()), {
