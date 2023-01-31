@@ -46,6 +46,7 @@ const useStyles = createUseStyles({
 function Navbar({
 	handelClickMenuBar,
 	setOpenHome,
+	openHome,
 	handleSignInClickOpen,
 	handleSignUpClickOpen,
 	handleSearchClickOpen,
@@ -88,7 +89,7 @@ function Navbar({
 					style={{ width: currentUser.email ? '100px' : '250px' }}
 				>
 					{currentUser.email ? (
-						<ProfileIcon setOpenHome={setOpenHome} />
+						<ProfileIcon openHome={openHome} setOpenHome={setOpenHome} />
 					) : (
 						<>
 							<Link className={classes.link} to="signin">

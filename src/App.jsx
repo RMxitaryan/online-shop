@@ -73,7 +73,6 @@ function App() {
 		setSearchDialogOpen(false);
 	};
 	const handleSignInClickOpen = () => {
-		// setSignUpDialogOpen(false);
 		setSignInDialogOpen(true);
 	};
 	const handleSignInClose = () => {
@@ -102,6 +101,7 @@ function App() {
 							<Navbar
 								handelClickMenuBar={handelClickMenuBar}
 								setOpenHome={setOpenHome}
+								openHome={openHome}
 								handleSignInClickOpen={handleSignInClickOpen}
 								handleSignUpClickOpen={handleSignUpClickOpen}
 								handleSearchClickOpen={handleSearchClickOpen}

@@ -71,7 +71,15 @@ function Home({
 				{isOpenMenu ? (
 					<MenuBar isOpenMenu={isOpenMenu} setIsOpenMenu={setIsOpenMenu} />
 				) : null}
-				<Card />
+				<SignInDialog open={signInDialogOpen} handleClose={handleSignInClose} />
+				<SignUpDialog open={signUpDialogOpen} handleClose={handleSignUpClose} />
+				<Card
+					openHome={openHome}
+					handleSignUpClose={handleSignUpClose}
+					handleSignUpClickOpen={handleSignUpClickOpen}
+					handleSignInClickOpen={handleSignInClickOpen}
+					handleSignInClose={handleSignInClose}
+				/>
 			</div>
 		</>
 	);
