@@ -185,12 +185,12 @@ export const Card = ({
 			setOpenSignDialog(true);
 		}
 	};
-	useEffect(() => {
-		if (!auth.currentUser) {
-			setIsAdd(false);
-			setIsFavorite(false);
-		}
-	}, [openHome]);
+	// useEffect(() => {
+	// 	if (!auth.currentUser) {
+	// 		setIsAdd(false);
+	// 		setIsFavorite(false);
+	// 	}
+	// }, [openHome]);
 	return (
 		<article className={classes.cardContainer}>
 			<div className={classes.pictureWrapper}>
