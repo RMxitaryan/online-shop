@@ -1,5 +1,6 @@
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
+import "firebase/compat/firestore";
 import {
   getFirestore,
   collection,
@@ -31,6 +32,7 @@ const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 
 export const auth = firebase.auth();
+export const firestore = firebase.firestore();
 
 // const colRef = collection(db, "SignedUpUsers");
 // getDocs(colRef)

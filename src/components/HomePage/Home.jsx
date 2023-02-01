@@ -1,6 +1,6 @@
 import { createUseStyles } from "react-jss";
 import { Link } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FullScreenDialog from "../Search/SearchDialog";
 import SignUpDialog from "../SignUp/SignUpDialog";
 import SignInDialog from "../SignIn/SignInDialog";
@@ -69,18 +69,22 @@ function Home({
   searchDialogOpen,
 }) {
   const classes = useStyles();
+  const cards = useSelector(selectCard);
+  const dispatch = useDispatch();
 
-  let cards = [];
-  const colRef = collection(db, "Images");
-  getDocs(colRef)
-    .then((snapshot) => {
-      snapshot.docs.forEach((doc) => {
-        cards.push({ ...doc.data(), id: doc.id });
-        // console.log(cards);
-      });
-    })
-    .catch((err) => console.log(err.message));
-  console.log("cards", cards);
+  useEffect(() => {
+    const colRef = collection(db, "Images");
+    getDocs(colRef)
+      .then((snapshot) => {
+        let arr = [];
+        snapshot.docs.forEach((doc) => {
+          arr.push({ ...doc.data(), id: doc.id });
+        });
+        dispatch(setCard(arr));
+      })
+      .catch((err) => console.log(err.message));
+  }, []);
+  console.log(cards);
 
   return (
     <>
@@ -98,15 +102,20 @@ function Home({
         ) : null}
         <SignInDialog open={signInDialogOpen} handleClose={handleSignInClose} />
         <SignUpDialog open={signUpDialogOpen} handleClose={handleSignUpClose} />
-        <Card
-          openHome={openHome}
-          handleSignUpClose={handleSignUpClose}
-          handleSignUpClickOpen={handleSignUpClickOpen}
-          handleSignInClickOpen={handleSignInClickOpen}
-          handleSignInClose={handleSignInClose}
-        />
-        {cards.map(() => {
-          return <Card />;
+        {cards.map((item) => {
+          return (
+            <Card
+              key={uuidv4()}
+              openHome={openHome}
+              handleSignUpClose={handleSignUpClose}
+              handleSignUpClickOpen={handleSignUpClickOpen}
+              handleSignInClickOpen={handleSignInClickOpen}
+              handleSignInClose={handleSignInClose}
+              src={item.src}
+              price={item.price}
+              name={item.name}
+            />
+          );
         })}
       </div>
     </>
