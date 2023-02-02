@@ -31,7 +31,7 @@ export const setUserReducer = (state = userInitialState, action) => {
 
 export const setCardReduser = (state = [], action) => {
   if (action.type === SET_CARD) {
-    return [...state, action.payload];
+    return action.payload;
   }
   return state;
 };
