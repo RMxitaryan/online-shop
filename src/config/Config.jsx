@@ -12,6 +12,7 @@ import {
 import "firebase/compat/storage";
 import { initializeApp } from "firebase/app";
 import { v4 as uuidv4 } from "uuid";
+import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCt1AdV22OrgmirQNOn54vFVbkywPvziNg",
@@ -33,6 +34,8 @@ export const db = getFirestore(app);
 
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
+
+export const storage = getStorage(app);
 
 // const colRef = collection(db, "SignedUpUsers");
 // getDocs(colRef)

@@ -8,6 +8,7 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 import { auth } from "../../config/Config";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../redux/user/actions";
+
 const useStyles = createUseStyles({
   profileIcone: {
     cursor: "pointer",
@@ -68,7 +69,7 @@ function ProfileIcon({ openHome, setOpenHome }) {
           horizontal: "left",
         }}
       >
-        <Link to="signin/profile" className={classes.link}>
+        <Link to="/profile" className={classes.link}>
           {
             <MenuItem
               onClick={() => {
@@ -80,7 +81,7 @@ function ProfileIcon({ openHome, setOpenHome }) {
             </MenuItem>
           }
         </Link>
-        <Link to="/favourite" className={classes.link}>
+        {/* <Link to="/favourite" className={classes.link}>
           {
             <MenuItem
               onClick={() => {
@@ -91,8 +92,8 @@ function ProfileIcon({ openHome, setOpenHome }) {
               Favourite
             </MenuItem>
           }
-        </Link>
-        <Link to="/about" className={classes.link}>
+        </Link> */}
+        {/* <Link to="/about" className={classes.link}>
           {
             <MenuItem
               onClick={() => {
@@ -103,7 +104,7 @@ function ProfileIcon({ openHome, setOpenHome }) {
               About
             </MenuItem>
           }
-        </Link>
+        </Link> */}
         <MenuItem
           onClick={() => {
             auth.signOut();
