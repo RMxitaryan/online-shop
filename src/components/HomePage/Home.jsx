@@ -17,10 +17,15 @@ import {
   setDoc,
 } from "firebase/firestore";
 import { useDispatch, useSelector } from "react-redux";
-import { selectCard } from "../../redux/user/selector";
-import { setCard } from "../../redux/user/actions";
+import {
+  selectCard,
+  selectUser,
+  selectBasket,
+} from "../../redux/user/selector";
+import { setBasket, setCard } from "../../redux/user/actions";
 import { v4 as uuidv4 } from "uuid";
-import { db } from "../../config/Config";
+import { auth, db } from "../../config/Config";
+import { AddCard } from "../Cards/AddCard";
 
 const useStyles = createUseStyles({
   header: {
@@ -70,7 +75,9 @@ function Home({
 }) {
   const classes = useStyles();
   const cards = useSelector(selectCard);
+  const basket = useSelector(selectBasket);
   const dispatch = useDispatch();
+  const currentUser = useSelector(selectUser);
 
   useEffect(() => {
     const colRef = collection(db, "Images");
@@ -84,7 +91,26 @@ function Home({
       })
       .catch((err) => console.log(err.message));
   }, []);
-  console.log(cards);
+
+  useEffect(() => {
+    setTimeout(() => {
+      const colRef = collection(db, "Basket");
+      getDocs(colRef)
+        .then((snapshot) => {
+          let arr = [];
+          snapshot.docs.forEach((doc) => {
+            if (auth.currentUser.email === doc.id) {
+              arr.push(...doc.data()?.basket);
+            }
+          });
+          dispatch(setBasket(arr));
+        })
+        .catch((err) => console.log(err.message));
+      console.log(basket, "basket");
+    }, 0);
+  }, []);
+  console.log("cards", cards);
+  console.log("basket", basket);
 
   return (
     <>
@@ -117,6 +143,10 @@ function Home({
             />
           );
         })}
+        <AddCard
+          handleSignUpClickOpen={handleSignUpClickOpen}
+          handleSignInClickOpen={handleSignInClickOpen}
+        />
       </div>
     </>
   );

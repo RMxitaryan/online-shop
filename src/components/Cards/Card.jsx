@@ -3,10 +3,13 @@ import { Link } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
 import CheckIcon from "@mui/icons-material/Check";
 import { useEffect, useState } from "react";
-import { auth } from "../../config/Config";
+import { addItemFirebase, auth } from "../../config/Config";
 import SignDialog from "../Dialog/SignDialog";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import { useDispatch, useSelector } from "react-redux";
+import { selectBasket, selectUser } from "../../redux/user/selector";
+import { setBasket } from "../../redux/user/actions";
 const useStyles = createUseStyles({
   cardContainer: {
     position: "relative",
@@ -173,10 +176,19 @@ export const Card = ({
   const [isAdd, setIsAdd] = useState(false);
   const [openSignDialog, setOpenSignDialog] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
+  const currentUser = useSelector(selectUser);
+  const basket = useSelector(selectBasket);
+  const dispatch = useDispatch();
 
   const handelAddClick = () => {
     if (auth.currentUser) {
+      const card = {
+        src: src,
+        name: name,
+        price: price,
+      };
       setIsAdd(!isAdd);
+      addItemFirebase(card, currentUser.email, basket);
     } else {
       setOpenSignDialog(true);
     }
@@ -223,7 +235,7 @@ export const Card = ({
       <footer className={classes.cardFooter}>
         <div>
           <span className={classes.title}>{name}</span>
-          <span className={classes.price}>{`Price : ${price}`}</span>
+          <span className={classes.price}>{`Price : ${price} $`}</span>
         </div>
       </footer>
       <SignDialog

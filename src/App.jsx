@@ -11,6 +11,7 @@ import { getFirestore, collection, getDocs } from "firebase/firestore";
 import { addUsersFirebase } from "./config/Config";
 import EditProfile from "./components/SettingsLeftBar/SettBarRoutes/EditProfile";
 import Profile from "./components/SettingsLeftBar/SettBarRoutes/Profile";
+import Basket from "./components/basket/Basket";
 const useStyles = createUseStyles({
   app: {
     display: "flex",
@@ -41,7 +42,7 @@ function App() {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-    }, 6000);
+    }, 3000);
   }, []);
 
   // const db = getFirestore();
@@ -132,6 +133,7 @@ function App() {
             <Route path="signup" element={<SignUp />} />
             <Route path="profile" element={<Profile />} />
             <Route path="editprofile" element={<EditProfile />} />
+            <Route path="basket" element={<Basket />} />
             {/* <Route
 							path="profile/account"
 							element={<Account name="Tigran" surname="Gevorgyan" />}

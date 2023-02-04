@@ -94,7 +94,9 @@ function Navbar({
           {currentUser.email ? (
             <>
               <ProfileIcon setOpenHome={setOpenHome} />
-              <img src="/img/bag.png" width={23} height={23} />
+              <Link to="basket">
+                <img src="/img/bag.png" width={23} height={23} />
+              </Link>
             </>
           ) : (
             <>

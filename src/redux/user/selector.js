@@ -5,3 +5,7 @@ export const selectUser = (state) => {
 export const selectCard = (state) => {
   return state.card;
 };
+
+export const selectBasket = (state) => {
+  return state.basket;
+};
