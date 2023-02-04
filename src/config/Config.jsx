@@ -55,3 +55,17 @@ export const addUsersFirebase = (userName, email, password) => {
     password: password,
   });
 };
+
+export const addImagesFirebase = (name, price, src, id) => {
+  setDoc(doc(db, "Images", id), {
+    src: src,
+    price: price,
+    name: name,
+  });
+};
+
+export const addItemFirebase = (card, email, basket) => {
+  setDoc(doc(db, "Basket", email), {
+    basket: [...basket, card],
+  });
+};
