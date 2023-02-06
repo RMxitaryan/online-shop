@@ -12,6 +12,9 @@ import { ref, uploadBytes, getDownloadURL, listAll } from "firebase/storage";
 import CustomizedSnackbars from "../snackbar/SnackbarFailed";
 import SnackbarFailed from "../snackbar/SnackbarFailed";
 import SnackbarSuccess from "../snackbar/SnackbarSuccess";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../redux/user/selector";
+import SelectSmall from "../selector/Selector";
 
 const useStyles = createUseStyles({
   signActionBlok: {
@@ -32,12 +35,16 @@ function NewItemDialog({
   handleClose,
   handleSignUpClickOpen,
   handleSignInClickOpen,
+  updater,
+  setUpdater,
 }) {
+  const [categories, setCategories] = useState("");
   const [name, setName] = useState("");
   const [imageUpload, setImageUpload] = useState(null);
   const [price, setPrice] = useState("");
   const [openSnackbarSuccess, setOpenSnackbarSuccess] = useState(false);
   const [openSnackbarFailed, setOpenSnackbarFailed] = useState(false);
+  const currenUser = useSelector(selectUser);
   const classes = useStyles();
 
   const handleCloseSnackbarSuccess = () => {
@@ -57,12 +64,22 @@ function NewItemDialog({
           response.items.forEach((item) => {
             if (item.name === id) {
               getDownloadURL(item).then((url) => {
-                addImagesFirebase(name, price, url, id);
+                addImagesFirebase(
+                  name,
+                  price,
+                  url,
+                  id,
+                  currenUser.email,
+                  categories
+                );
+                setUpdater(() => {
+                  return !updater;
+                });
               });
             }
           });
           handleCloseSnackbarSuccess();
-          handleClose();
+          handleCloseDialog();
         });
       });
     } else {
@@ -105,6 +122,10 @@ function NewItemDialog({
               value={price}
               onChange={(e) => setPrice(e.target.value)}
               placeholder="price"
+            />
+            <SelectSmall
+              categories={categories}
+              setCategories={setCategories}
             />
           </DialogContentText>
         </DialogContent>

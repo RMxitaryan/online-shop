@@ -12,6 +12,7 @@ import { addUsersFirebase } from "./config/Config";
 import EditProfile from "./components/SettingsLeftBar/SettBarRoutes/EditProfile";
 import Profile from "./components/SettingsLeftBar/SettBarRoutes/Profile";
 import Basket from "./components/basket/Basket";
+import MenuBar from "./components/Menu/MenuBar";
 const useStyles = createUseStyles({
   app: {
     display: "flex",
@@ -93,53 +94,59 @@ function App() {
           className={classes.loading}
         />
       ) : (
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <Navbar
-                handelClickMenuBar={handelClickMenuBar}
-                setOpenHome={setOpenHome}
-                openHome={openHome}
-                handleSignInClickOpen={handleSignInClickOpen}
-                handleSignUpClickOpen={handleSignUpClickOpen}
-                handleSearchClickOpen={handleSearchClickOpen}
-              />
-            }
-          >
+        <>
+          <Routes>
             <Route
-              index
+              path="/"
               element={
-                <Home
-                  setIsOpenMenu={setIsOpenMenu}
-                  isOpenMenu={isOpenMenu}
+                <Navbar
+                  handelClickMenuBar={handelClickMenuBar}
+                  setOpenHome={setOpenHome}
                   openHome={openHome}
-                  signInDialogOpen={signInDialogOpen}
-                  handleSignInClose={handleSignInClose}
                   handleSignInClickOpen={handleSignInClickOpen}
-                  signUpDialogOpen={signUpDialogOpen}
-                  handleSignUpClose={handleSignUpClose}
-                  handleSearchClickOpen={handleSearchClickOpen}
-                  handleSearchClose={handleSearchClose}
                   handleSignUpClickOpen={handleSignUpClickOpen}
-                  searchDialogOpen={searchDialogOpen}
+                  handleSearchClickOpen={handleSearchClickOpen}
                 />
               }
-            />
-            {/* <Route path="signin/profile" element={<Account />} /> */}
-            {/* <Route path="favourite" element={<Favourite />} /> */}
-            {/* <Route path="about" element={<About />} /> */}
-            <Route path="signin" element={<SignIn />} />
-            <Route path="signup" element={<SignUp />} />
-            <Route path="profile" element={<Profile />} />
-            <Route path="editprofile" element={<EditProfile />} />
-            <Route path="basket" element={<Basket />} />
-            {/* <Route
+            >
+              <Route
+                index
+                element={
+                  <Home
+                    setIsOpenMenu={setIsOpenMenu}
+                    isOpenMenu={isOpenMenu}
+                    openHome={openHome}
+                    signInDialogOpen={signInDialogOpen}
+                    handleSignInClose={handleSignInClose}
+                    handleSignInClickOpen={handleSignInClickOpen}
+                    signUpDialogOpen={signUpDialogOpen}
+                    handleSignUpClose={handleSignUpClose}
+                    handleSearchClickOpen={handleSearchClickOpen}
+                    handleSearchClose={handleSearchClose}
+                    handleSignUpClickOpen={handleSignUpClickOpen}
+                    searchDialogOpen={searchDialogOpen}
+                  />
+                }
+              />
+              {/* <Route path="signin/profile" element={<Account />} /> */}
+              {/* <Route path="favourite" element={<Favourite />} /> */}
+              {/* <Route path="about" element={<About />} /> */}
+              <Route path="signin" element={<SignIn />} />
+              <Route path="signup" element={<SignUp />} />
+              <Route path="profile" element={<Profile />} />
+              <Route path="editprofile" element={<EditProfile />} />
+              <Route path="basket" element={<Basket />} />
+              {/* <Route
 							path="profile/account"
 							element={<Account name="Tigran" surname="Gevorgyan" />}
 						/> */}
-          </Route>
-        </Routes>
+            </Route>
+          </Routes>
+
+          {isOpenMenu ? (
+            <MenuBar isOpenMenu={isOpenMenu} setIsOpenMenu={setIsOpenMenu} />
+          ) : null}
+        </>
       )}
     </div>
   );
