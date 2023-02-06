@@ -73,6 +73,7 @@ function Home({
   handleSignUpClickOpen,
   searchDialogOpen,
 }) {
+  const [updater, setUpdater] = useState(false);
   const classes = useStyles();
   const cards = useSelector(selectCard);
   const basket = useSelector(selectBasket);
@@ -84,13 +85,18 @@ function Home({
     getDocs(colRef)
       .then((snapshot) => {
         let arr = [];
-        snapshot.docs.forEach((doc) => {
-          arr.push({ ...doc.data(), id: doc.id });
-        });
+        for (let i = 0; i < 7; i++) {
+          if (snapshot.docs[i]) {
+            arr.push({ ...snapshot.docs[i].data(), id: snapshot.docs[i].id });
+          }
+        }
+        // snapshot.docs.forEach((doc) => {
+
+        // });
         dispatch(setCard(arr));
       })
       .catch((err) => console.log(err.message));
-  }, []);
+  }, [updater]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -143,10 +149,14 @@ function Home({
             />
           );
         })}
-        <AddCard
-          handleSignUpClickOpen={handleSignUpClickOpen}
-          handleSignInClickOpen={handleSignInClickOpen}
-        />
+        {currentUser.email && (
+          <AddCard
+            handleSignUpClickOpen={handleSignUpClickOpen}
+            handleSignInClickOpen={handleSignInClickOpen}
+            updater={updater}
+            setUpdater={setUpdater}
+          />
+        )}
       </div>
     </>
   );

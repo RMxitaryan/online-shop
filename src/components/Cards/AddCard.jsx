@@ -81,6 +81,8 @@ export const AddCard = ({
   src,
   price,
   name,
+  updater,
+  setUpdater,
 }) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
@@ -119,6 +121,8 @@ export const AddCard = ({
         handleSignInClickOpen={handleSignInClickOpen}
       />
       <NewItemDialog
+        updater={updater}
+        setUpdater={setUpdater}
         open={open}
         handleClose={() => {
           setOpen(false);

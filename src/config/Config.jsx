@@ -56,11 +56,18 @@ export const addUsersFirebase = (userName, email, password) => {
   });
 };
 
-export const addImagesFirebase = (name, price, src, id) => {
+export const addImagesFirebase = (name, price, src, id, email, categories) => {
   setDoc(doc(db, "Images", id), {
     src: src,
     price: price,
     name: name,
+    email: email,
+  });
+  setDoc(doc(db, categories, id), {
+    src: src,
+    price: price,
+    name: name,
+    email: email,
   });
 };
 
