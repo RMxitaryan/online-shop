@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
 import CheckIcon from "@mui/icons-material/Check";
 import { useEffect, useState } from "react";
-import { addItemFirebase, auth } from "../../config/Config";
+import { addItemFirebase, auth, deleteItemFirebase } from "../../config/Config";
 import SignDialog from "../Dialog/SignDialog";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -171,6 +171,7 @@ export const Card = ({
   src,
   price,
   name,
+  id,
 }) => {
   const classes = useStyles();
   const [isAdd, setIsAdd] = useState(false);
@@ -180,19 +181,38 @@ export const Card = ({
   const basket = useSelector(selectBasket);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    setTimeout(() => {
+      if (currentUser.email) {
+        basket.map((item) => {
+          if (item.id === id) {
+            setIsAdd(!isAdd);
+          }
+        });
+      }
+    }, 0);
+  }, [currentUser.email]);
+
   const handelAddClick = () => {
     if (auth.currentUser) {
       const card = {
         src: src,
         name: name,
         price: price,
+        id: id,
       };
       setIsAdd(!isAdd);
-      addItemFirebase(card, currentUser.email, basket);
+      addItemFirebase(card, currentUser.email, id);
     } else {
       setOpenSignDialog(true);
     }
   };
+
+  const handleCheckClick = () => {
+    setIsAdd(!isAdd);
+    deleteItemFirebase(currentUser.email, id);
+  };
+
   const handelFavoriteClick = () => {
     if (auth.currentUser) {
       setIsFavorite(!isFavorite);
@@ -226,7 +246,10 @@ export const Card = ({
           )}
 
           {isAdd ? (
-            <CheckIcon onClick={handelAddClick} className={classes.addedItem} />
+            <CheckIcon
+              onClick={handleCheckClick}
+              className={classes.addedItem}
+            />
           ) : (
             <AddIcon onClick={handelAddClick} className={classes.addIcon} />
           )}
