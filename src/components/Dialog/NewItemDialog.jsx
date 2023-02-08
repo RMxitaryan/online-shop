@@ -56,7 +56,7 @@ function NewItemDialog({
 
   const handleAddClick = () => {
     if (imageUpload && name.trim().length && price.trim().length) {
-      const id = imageUpload.name + uuidv4();
+      const id = uuidv4();
       const imageRef = ref(storage, `images/${id}`);
       uploadBytes(imageRef, imageUpload).then((res) => {
         const imageListRef = ref(storage, "images/");
