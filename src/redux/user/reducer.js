@@ -9,7 +9,7 @@ import { SET_USER, DELETE_USER, SET_CARD } from "../actionTypes";
 //   // url: null,
 // };
 
-export const userInitialState = [];
+export const userInitialState = {};
 export const setUserReducer = (state = userInitialState, action) => {
   if (action.type === SET_USER) {
     return {

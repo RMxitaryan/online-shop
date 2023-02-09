@@ -18,6 +18,9 @@ const useStyles = createUseStyles({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    backdropFilter: "blur(30px)",
+    boxSizing: "border-box",
+    borderBottom: "1px solid white",
   },
   name: {
     marginLeft: "200px",

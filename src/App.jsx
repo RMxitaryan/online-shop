@@ -8,9 +8,16 @@ import { height } from "@mui/system";
 import SignIn from "./components/SignIn/SignIn";
 import SignUp from "./components/SignUp/SignUp";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
-import { addUsersFirebase } from "./config/Config";
+import { addUsersFirebase, db } from "./config/Config";
 import EditProfile from "./components/SettingsLeftBar/SettBarRoutes/EditProfile";
 import Profile from "./components/SettingsLeftBar/SettBarRoutes/Profile";
+import Kitchen from "./components/MenuPages/Kitchen";
+import HomeAndClimat from "./components/MenuPages/HomeAndClimat";
+import HealthAndBeauty from "./components/MenuPages/HealthAndBeauty";
+import BorkHome from "./components/MenuPages/BorkHome";
+import Accessories from "./components/MenuPages/Accessories";
+import { useDispatch } from "react-redux";
+import { setCard } from "./redux/user/actions";
 const useStyles = createUseStyles({
   app: {
     display: "flex",
@@ -35,29 +42,25 @@ function App() {
   const [signInDialogOpen, setSignInDialogOpen] = useState(false);
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const [openHome, setOpenHome] = useState(true);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 6000);
+    const colRef = collection(db, "Images");
+    getDocs(colRef)
+      .then((snapshot) => {
+        let arr = [];
+        snapshot.docs.forEach((doc) => {
+          console.log(doc, "doc");
+          arr.push({ ...doc.data(), id: doc.id });
+        });
+        dispatch(setCard(arr));
+        setLoading(false);
+      })
+      .catch((err) => console.log(err.message));
   }, []);
 
-  // const db = getFirestore();
-  // const colRef = collection(db, "SignedUpUsers");
-  // getDocs(colRef)
-  //   .then((snapshot) => {
-  //     let users = [];
-  //     snapshot.docs.forEach((doc) => {
-  //       users.push({ ...doc.data(), id: doc.id });
-  //     });
-  //     console.log(users);
-  //     console.log("kkk");
-  //   })
-  //   .catch((err) => console.log(err));
   const handleSignUpClickOpen = () => {
-    // setSignInDialogOpen(false);
     setSignUpDialogOpen(true);
   };
   const handleSignUpClose = () => {
@@ -103,6 +106,8 @@ function App() {
                 handleSignInClickOpen={handleSignInClickOpen}
                 handleSignUpClickOpen={handleSignUpClickOpen}
                 handleSearchClickOpen={handleSearchClickOpen}
+                setIsOpenMenu={setIsOpenMenu}
+                isOpenMenu={isOpenMenu}
               />
             }
           >
@@ -125,17 +130,15 @@ function App() {
                 />
               }
             />
-            {/* <Route path="signin/profile" element={<Account />} /> */}
-            {/* <Route path="favourite" element={<Favourite />} /> */}
-            {/* <Route path="about" element={<About />} /> */}
             <Route path="signin" element={<SignIn />} />
             <Route path="signup" element={<SignUp />} />
             <Route path="profile" element={<Profile />} />
             <Route path="editprofile" element={<EditProfile />} />
-            {/* <Route
-							path="profile/account"
-							element={<Account name="Tigran" surname="Gevorgyan" />}
-						/> */}
+            <Route path="Kitchen" element={<Kitchen />} />
+            <Route path="HomeAndClimat" element={<HomeAndClimat />} />
+            <Route path="HealthAndBeauty" element={<HealthAndBeauty />} />
+            <Route path="BorkHome" element={<BorkHome />} />
+            <Route path="Accessories" element={<Accessories />} />
           </Route>
         </Routes>
       )}

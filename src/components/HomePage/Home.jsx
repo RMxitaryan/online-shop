@@ -7,6 +7,7 @@ import SignInDialog from "../SignIn/SignInDialog";
 import MenuBar from "../Menu/MenuBar";
 import CarouselBox from "../CarouselBox";
 import Navbar from "../Navbar/Navbar";
+import { RingLoader } from "react-spinners";
 import { Card } from "../Cards/Card";
 import {
   getFirestore,
@@ -18,9 +19,9 @@ import {
 } from "firebase/firestore";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCard } from "../../redux/user/selector";
-import { setCard } from "../../redux/user/actions";
+import { setCard, setUser } from "../../redux/user/actions";
 import { v4 as uuidv4 } from "uuid";
-import { db } from "../../config/Config";
+import { auth, db } from "../../config/Config";
 
 const useStyles = createUseStyles({
   header: {
@@ -52,6 +53,12 @@ const useStyles = createUseStyles({
     },
   },
   headerTopLeft: { marginLeft: 15 },
+  loading: {
+    color: "#ef6f2e",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: "300px",
+  },
 });
 
 function Home({
@@ -70,55 +77,38 @@ function Home({
 }) {
   const classes = useStyles();
   const cards = useSelector(selectCard);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    const colRef = collection(db, "Images");
-    getDocs(colRef)
-      .then((snapshot) => {
-        let arr = [];
-        snapshot.docs.forEach((doc) => {
-          arr.push({ ...doc.data(), id: doc.id });
-        });
-        dispatch(setCard(arr));
-      })
-      .catch((err) => console.log(err.message));
-  }, []);
-  console.log(cards);
 
   return (
-    <>
-      <div className={classes.app}>
-        <FullScreenDialog
-          handleClickOpen={handleSearchClickOpen}
-          handleClose={handleSearchClose}
-          open={searchDialogOpen}
-        />
+    <div className={classes.app}>
+      <FullScreenDialog
+        handleClickOpen={handleSearchClickOpen}
+        handleClose={handleSearchClose}
+        open={searchDialogOpen}
+      />
 
-        <CarouselBox />
+      <CarouselBox />
 
-        {isOpenMenu ? (
-          <MenuBar isOpenMenu={isOpenMenu} setIsOpenMenu={setIsOpenMenu} />
-        ) : null}
-        <SignInDialog open={signInDialogOpen} handleClose={handleSignInClose} />
-        <SignUpDialog open={signUpDialogOpen} handleClose={handleSignUpClose} />
-        {cards.map((item) => {
-          return (
-            <Card
-              key={uuidv4()}
-              openHome={openHome}
-              handleSignUpClose={handleSignUpClose}
-              handleSignUpClickOpen={handleSignUpClickOpen}
-              handleSignInClickOpen={handleSignInClickOpen}
-              handleSignInClose={handleSignInClose}
-              src={item.src}
-              price={item.price}
-              name={item.name}
-            />
-          );
-        })}
-      </div>
-    </>
+      {isOpenMenu ? (
+        <MenuBar isOpenMenu={isOpenMenu} setIsOpenMenu={setIsOpenMenu} />
+      ) : null}
+      <SignInDialog open={signInDialogOpen} handleClose={handleSignInClose} />
+      <SignUpDialog open={signUpDialogOpen} handleClose={handleSignUpClose} />
+      {cards.map((item) => {
+        return (
+          <Card
+            key={uuidv4()}
+            openHome={openHome}
+            handleSignUpClose={handleSignUpClose}
+            handleSignUpClickOpen={handleSignUpClickOpen}
+            handleSignInClickOpen={handleSignInClickOpen}
+            handleSignInClose={handleSignInClose}
+            src={item.src}
+            price={item.price}
+            name={item.name}
+          />
+        );
+      })}
+    </div>
   );
 }
 
