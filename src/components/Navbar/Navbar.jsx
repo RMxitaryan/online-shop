@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../../redux/user/selector";
 import { auth } from "../../config/Config";
 import { setUser } from "../../redux/user/actions";
-
+import { useLocation } from "react-router-dom";
 const useStyles = createUseStyles({
   header: {
     backgroundColor: "#3a3330",
@@ -21,6 +21,31 @@ const useStyles = createUseStyles({
     backdropFilter: "blur(30px)",
     boxSizing: "border-box",
     borderBottom: "1px solid white",
+    backdropFilter: "blur(30px)",
+    boxSizing: "border-box",
+    borderBottom: "1px solid white",
+  },
+  name: {
+    marginLeft: "200px",
+    color: "white",
+    fontSize: 27,
+  },
+  headerTopRight: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    // width: currentUser.email ? 100 : 250,
+    marginRight: 12,
+  },
+  header: {
+    backgroundColor: "#3a3330",
+    width: "100%",
+    height: 60,
+    header: {},
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   name: {
     marginLeft: "200px",
@@ -44,6 +69,11 @@ const useStyles = createUseStyles({
   link: {
     textDecoration: "none",
   },
+  signActive: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-around",
+  },
 });
 
 function Navbar({
@@ -62,19 +92,24 @@ function Navbar({
     const email = auth.currentUser?.email;
     dispatch(setUser({ email: email }));
   }, []);
-
+  const pathname = useLocation();
+  const isSignIn =
+    pathname.pathname === "/signin" || pathname.pathname === "/signup";
   return (
     <>
-      <div className={classes.header}>
-        <div className={classes.headerTopLeft}>
-          <img
-            src="/img/menu.png"
-            width={23}
-            height={23}
-            onClick={handelClickMenuBar}
-            style={{ cursor: "pointer" }}
-          />
-        </div>
+      <div className={isSignIn ? classes.signActive : classes.header}>
+        {!isSignIn && (
+          <div className={classes.headerTopLeft}>
+            <img
+              src="/img/menu.png"
+              width={23}
+              height={23}
+              onClick={handelClickMenuBar}
+              style={{ cursor: "pointer" }}
+            />
+          </div>
+        )}
+
         <div className={classes.name}>
           <Link to="/">
             <img
@@ -97,26 +132,31 @@ function Navbar({
           {currentUser.email ? (
             <>
               <ProfileIcon setOpenHome={setOpenHome} />
-              <img src="/img/bag.png" width={23} height={23} />
+              <Link to="basket">
+                <img src="/img/bag.png" width={23} height={23} />
+              </Link>
             </>
           ) : (
-            <>
-              <Link className={classes.link} to="signin">
-                <PrimaryButton>sign in</PrimaryButton>
-              </Link>
-              <Link className={classes.link} to="signup">
-                <PrimaryButton>sign up</PrimaryButton>
-              </Link>
-            </>
+            !isSignIn && (
+              <>
+                <Link className={classes.link} to="signin">
+                  <PrimaryButton>sign in</PrimaryButton>
+                </Link>
+                <Link className={classes.link} to="signup">
+                  <PrimaryButton>sign up</PrimaryButton>
+                </Link>
+              </>
+            )
           )}
-
-          <img
-            src="/img/search.png"
-            width={23}
-            height={23}
-            className={classes.searchIcon}
-            onClick={handleSearchClickOpen}
-          />
+          {!isSignIn && (
+            <img
+              src="/img/search.png"
+              width={23}
+              height={23}
+              className={classes.searchIcon}
+              onClick={handleSearchClickOpen}
+            />
+          )}
         </div>
       </div>
       <Outlet />

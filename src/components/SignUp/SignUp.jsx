@@ -8,7 +8,7 @@ import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../../redux/user/selector";
 import { setUser } from "../../redux/user/actions";
-import { addUsersFirebase, auth, db } from "../../config/Config";
+import { addBasket, addUsersFirebase, auth, db } from "../../config/Config";
 import { Navigate } from "react-router-dom";
 import { setDoc, doc } from "firebase/firestore";
 import { v4 as uuid } from "uuid";
@@ -99,6 +99,7 @@ function SignUp() {
         });
         // addUsersFirebase(userName, email, password);
         dispatch(setUser({ ...currentUser, email: auth.user.email }));
+        addBasket(email);
         return navigate("/");
       })
       .catch((error) => setError("Invalid email or password"));

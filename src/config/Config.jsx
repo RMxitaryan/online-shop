@@ -8,6 +8,8 @@ import {
   addDoc,
   doc,
   setDoc,
+  updateDoc,
+  deleteField,
 } from "firebase/firestore";
 import "firebase/compat/storage";
 import { initializeApp } from "firebase/app";
@@ -69,5 +71,36 @@ export const addUsersFirebase = (
     firstName: firstName,
     lastName: lastName,
     phone: phone,
+  });
+};
+
+export const addImagesFirebase = (name, price, src, id, email, categories) => {
+  setDoc(doc(db, "Images", id), {
+    src: src,
+    price: price,
+    name: name,
+    email: email,
+  });
+  setDoc(doc(db, categories, id), {
+    src: src,
+    price: price,
+    name: name,
+    email: email,
+  });
+};
+
+export const addBasket = (email) => {
+  setDoc(doc(db, "Basket", email), {});
+};
+
+export const addItemFirebase = (card, email, id) => {
+  updateDoc(doc(db, "Basket", email), {
+    [id]: card,
+  });
+};
+
+export const deleteItemFirebase = (email, id) => {
+  updateDoc(doc(db, "Basket", email), {
+    [id]: deleteField(),
   });
 };

@@ -81,7 +81,6 @@ const useStyles = createUseStyles({
     height: "30px",
   },
 });
-
 const MenuBar = ({ isOpenMenu, setIsOpenMenu }) => {
   const classes = useStyles();
 

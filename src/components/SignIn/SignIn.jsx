@@ -41,6 +41,7 @@ const useStyles = createUseStyles({
     justifyContent: "space-around",
   },
   PrimaryButton: {
+    listStyleType: "none",
     color: "white",
     width: "100px",
     fontSize: "18px",
@@ -65,6 +66,16 @@ const useStyles = createUseStyles({
   },
   error: {
     color: "#FF0000",
+  },
+  signUpBtn: {
+    listStyleType: "none",
+    color: "#9a9999",
+    textDecoration: "underline",
+
+    "&:hover": {
+      cursor: "pointer",
+      color: "rgb(240,240,240)",
+    },
   },
 });
 function SignIn() {
@@ -129,6 +140,14 @@ function SignIn() {
           >
             Sign In
           </PrimaryButton>
+        </div>
+        <div
+          onClick={() => {
+            navigate("/signup");
+          }}
+          className={classes.signUpBtn}
+        >
+          Sign Up
         </div>
       </div>
     </div>

@@ -7,7 +7,6 @@ import SignInDialog from "../SignIn/SignInDialog";
 import MenuBar from "../Menu/MenuBar";
 import CarouselBox from "../CarouselBox";
 import Navbar from "../Navbar/Navbar";
-import { RingLoader } from "react-spinners";
 import { Card } from "../Cards/Card";
 import {
   getFirestore,
@@ -18,10 +17,15 @@ import {
   setDoc,
 } from "firebase/firestore";
 import { useDispatch, useSelector } from "react-redux";
-import { selectCard } from "../../redux/user/selector";
-import { setCard, setUser } from "../../redux/user/actions";
+import {
+  selectCard,
+  selectUser,
+  selectBasket,
+} from "../../redux/user/selector";
+import { setBasket, setCard } from "../../redux/user/actions";
 import { v4 as uuidv4 } from "uuid";
 import { auth, db } from "../../config/Config";
+import { AddCard } from "../Cards/AddCard";
 
 const useStyles = createUseStyles({
   header: {
@@ -53,12 +57,6 @@ const useStyles = createUseStyles({
     },
   },
   headerTopLeft: { marginLeft: 15 },
-  loading: {
-    color: "#ef6f2e",
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: "300px",
-  },
 });
 
 function Home({
@@ -75,40 +73,96 @@ function Home({
   handleSignUpClickOpen,
   searchDialogOpen,
 }) {
+  const [updater, setUpdater] = useState(false);
   const classes = useStyles();
   const cards = useSelector(selectCard);
+  const basket = useSelector(selectBasket);
+  const dispatch = useDispatch();
+  const currentUser = useSelector(selectUser);
+
+  useEffect(() => {
+    const colRef = collection(db, "Images");
+    getDocs(colRef)
+      .then((snapshot) => {
+        let arr = [];
+        for (let i = 0; i < 9; i++) {
+          if (snapshot.docs[i]) {
+            arr.push({ ...snapshot.docs[i].data(), id: snapshot.docs[i].id });
+          }
+        }
+        // snapshot.docs.forEach((doc) => {
+
+        // });
+        dispatch(setCard(arr));
+      })
+      .catch((err) => console.log(err.message));
+  }, [updater]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      const colRef = collection(db, "Basket");
+      getDocs(colRef)
+        .then((snapshot) => {
+          let arr = [];
+          snapshot.docs.forEach((doc) => {
+            if (auth.currentUser.email === doc.id) {
+              const obj = doc.data();
+              for (const item in obj) {
+                arr.push(obj[item]);
+              }
+            }
+          });
+          dispatch(setBasket(arr));
+        })
+        .catch((err) => console.log(err.message));
+      console.log(basket, "basket");
+    }, 0);
+  }, []);
+  console.log("cards", cards);
+  console.log("basket", basket);
 
   return (
-    <div className={classes.app}>
-      <FullScreenDialog
-        handleClickOpen={handleSearchClickOpen}
-        handleClose={handleSearchClose}
-        open={searchDialogOpen}
-      />
+    <>
+      <div className={classes.app}>
+        <FullScreenDialog
+          handleClickOpen={handleSearchClickOpen}
+          handleClose={handleSearchClose}
+          open={searchDialogOpen}
+        />
 
-      <CarouselBox />
+        <CarouselBox />
 
-      {isOpenMenu ? (
-        <MenuBar isOpenMenu={isOpenMenu} setIsOpenMenu={setIsOpenMenu} />
-      ) : null}
-      <SignInDialog open={signInDialogOpen} handleClose={handleSignInClose} />
-      <SignUpDialog open={signUpDialogOpen} handleClose={handleSignUpClose} />
-      {cards.map((item) => {
-        return (
-          <Card
-            key={uuidv4()}
-            openHome={openHome}
-            handleSignUpClose={handleSignUpClose}
+        {isOpenMenu ? (
+          <MenuBar isOpenMenu={isOpenMenu} setIsOpenMenu={setIsOpenMenu} />
+        ) : null}
+        <SignInDialog open={signInDialogOpen} handleClose={handleSignInClose} />
+        <SignUpDialog open={signUpDialogOpen} handleClose={handleSignUpClose} />
+        {cards.map((item) => {
+          return (
+            <Card
+              key={uuidv4()}
+              openHome={openHome}
+              handleSignUpClose={handleSignUpClose}
+              handleSignUpClickOpen={handleSignUpClickOpen}
+              handleSignInClickOpen={handleSignInClickOpen}
+              handleSignInClose={handleSignInClose}
+              src={item.src}
+              price={item.price}
+              name={item.name}
+              id={item.id}
+            />
+          );
+        })}
+        {currentUser.email && (
+          <AddCard
             handleSignUpClickOpen={handleSignUpClickOpen}
             handleSignInClickOpen={handleSignInClickOpen}
-            handleSignInClose={handleSignInClose}
-            src={item.src}
-            price={item.price}
-            name={item.name}
+            updater={updater}
+            setUpdater={setUpdater}
           />
-        );
-      })}
-    </div>
+        )}
+      </div>
+    </>
   );
 }
 

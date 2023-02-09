@@ -18,6 +18,7 @@ import BorkHome from "./components/MenuPages/BorkHome";
 import Accessories from "./components/MenuPages/Accessories";
 import { useDispatch } from "react-redux";
 import { setCard } from "./redux/user/actions";
+import MenuBar from "./components/Menu/MenuBar";
 const useStyles = createUseStyles({
   app: {
     display: "flex",
@@ -95,52 +96,57 @@ function App() {
           className={classes.loading}
         />
       ) : (
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <Navbar
-                handelClickMenuBar={handelClickMenuBar}
-                setOpenHome={setOpenHome}
-                openHome={openHome}
-                handleSignInClickOpen={handleSignInClickOpen}
-                handleSignUpClickOpen={handleSignUpClickOpen}
-                handleSearchClickOpen={handleSearchClickOpen}
-                setIsOpenMenu={setIsOpenMenu}
-                isOpenMenu={isOpenMenu}
-              />
-            }
-          >
+        <>
+          <Routes>
             <Route
-              index
+              path="/"
               element={
-                <Home
+                <Navbar
+                  handelClickMenuBar={handelClickMenuBar}
+                  setOpenHome={setOpenHome}
+                  openHome={openHome}
+                  handleSignInClickOpen={handleSignInClickOpen}
+                  handleSignUpClickOpen={handleSignUpClickOpen}
+                  handleSearchClickOpen={handleSearchClickOpen}
                   setIsOpenMenu={setIsOpenMenu}
                   isOpenMenu={isOpenMenu}
-                  openHome={openHome}
-                  signInDialogOpen={signInDialogOpen}
-                  handleSignInClose={handleSignInClose}
-                  handleSignInClickOpen={handleSignInClickOpen}
-                  signUpDialogOpen={signUpDialogOpen}
-                  handleSignUpClose={handleSignUpClose}
-                  handleSearchClickOpen={handleSearchClickOpen}
-                  handleSearchClose={handleSearchClose}
-                  handleSignUpClickOpen={handleSignUpClickOpen}
-                  searchDialogOpen={searchDialogOpen}
                 />
               }
-            />
-            <Route path="signin" element={<SignIn />} />
-            <Route path="signup" element={<SignUp />} />
-            <Route path="profile" element={<Profile />} />
-            <Route path="editprofile" element={<EditProfile />} />
-            <Route path="Kitchen" element={<Kitchen />} />
-            <Route path="HomeAndClimat" element={<HomeAndClimat />} />
-            <Route path="HealthAndBeauty" element={<HealthAndBeauty />} />
-            <Route path="BorkHome" element={<BorkHome />} />
-            <Route path="Accessories" element={<Accessories />} />
-          </Route>
-        </Routes>
+            >
+              <Route
+                index
+                element={
+                  <Home
+                    setIsOpenMenu={setIsOpenMenu}
+                    isOpenMenu={isOpenMenu}
+                    openHome={openHome}
+                    signInDialogOpen={signInDialogOpen}
+                    handleSignInClose={handleSignInClose}
+                    handleSignInClickOpen={handleSignInClickOpen}
+                    signUpDialogOpen={signUpDialogOpen}
+                    handleSignUpClose={handleSignUpClose}
+                    handleSearchClickOpen={handleSearchClickOpen}
+                    handleSearchClose={handleSearchClose}
+                    handleSignUpClickOpen={handleSignUpClickOpen}
+                    searchDialogOpen={searchDialogOpen}
+                  />
+                }
+              />
+              <Route path="signin" element={<SignIn />} />
+              <Route path="signup" element={<SignUp />} />
+              <Route path="profile" element={<Profile />} />
+              <Route path="editprofile" element={<EditProfile />} />
+              <Route path="Kitchen" element={<Kitchen />} />
+              <Route path="HomeAndClimat" element={<HomeAndClimat />} />
+              <Route path="HealthAndBeauty" element={<HealthAndBeauty />} />
+              <Route path="BorkHome" element={<BorkHome />} />
+              <Route path="Accessories" element={<Accessories />} />
+            </Route>
+          </Routes>
+          {isOpenMenu ? (
+            <MenuBar isOpenMenu={isOpenMenu} setIsOpenMenu={setIsOpenMenu} />
+          ) : null}
+        </>
       )}
     </div>
   );
