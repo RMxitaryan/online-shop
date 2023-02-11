@@ -28,7 +28,6 @@ import { v4 as uuidv4 } from "uuid";
 import { auth, db } from "../../config/Config";
 import { AddCard } from "../Cards/AddCard";
 
-
 const useStyles = createUseStyles({
   header: {
     backgroundColor: "#3a3330",
@@ -139,37 +138,36 @@ function Home({
 
       <CarouselBox />
 
-        {isOpenMenu ? (
-          <MenuBar isOpenMenu={isOpenMenu} setIsOpenMenu={setIsOpenMenu} />
-        ) : null}
-        <SignInDialog open={signInDialogOpen} handleClose={handleSignInClose} />
-        <SignUpDialog open={signUpDialogOpen} handleClose={handleSignUpClose} />
-        {cards.map((item) => {
-          return (
-            <Card
-              key={uuidv4()}
-              openHome={openHome}
-              handleSignUpClose={handleSignUpClose}
-              handleSignUpClickOpen={handleSignUpClickOpen}
-              handleSignInClickOpen={handleSignInClickOpen}
-              handleSignInClose={handleSignInClose}
-              src={item.src}
-              price={item.price}
-              name={item.name}
-              id={item.id}
-            />
-          );
-        })}
-        {currentUser.email && (
-          <AddCard
+      {isOpenMenu ? (
+        <MenuBar isOpenMenu={isOpenMenu} setIsOpenMenu={setIsOpenMenu} />
+      ) : null}
+      <SignInDialog open={signInDialogOpen} handleClose={handleSignInClose} />
+      <SignUpDialog open={signUpDialogOpen} handleClose={handleSignUpClose} />
+      {cards.map((item) => {
+        return (
+          <Card
+            key={uuidv4()}
+            openHome={openHome}
+            handleSignUpClose={handleSignUpClose}
             handleSignUpClickOpen={handleSignUpClickOpen}
             handleSignInClickOpen={handleSignInClickOpen}
-            updater={updater}
-            setUpdater={setUpdater}
+            handleSignInClose={handleSignInClose}
+            src={item.src}
+            price={item.price}
+            name={item.name}
+            id={item.id}
           />
-        )}
-      </div>
-
+        );
+      })}
+      {currentUser.email && (
+        <AddCard
+          handleSignUpClickOpen={handleSignUpClickOpen}
+          handleSignInClickOpen={handleSignInClickOpen}
+          updater={updater}
+          setUpdater={setUpdater}
+        />
+      )}
+    </div>
   );
 }
 

@@ -8,12 +8,10 @@ import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../../redux/user/selector";
 import { setUser } from "../../redux/user/actions";
-import { addUsersFirebase, auth, db } from "../../config/Config";
+import { addBasket, addUsersFirebase, auth, db } from "../../config/Config";
 import { Navigate } from "react-router-dom";
 import { setDoc, doc } from "firebase/firestore";
 import { v4 as uuid } from "uuid";
-import { addBasket, addUsersFirebase } from "../../config/Config";
-
 
 const useStyles = createUseStyles({
   signUpDialog: {
@@ -153,6 +151,7 @@ function SignUp() {
             onClick={onSignUp}
             className={classes.PrimaryButton}
             variant="text"
+            sx={{ color: "#fff" }}
           >
             Sign Up
           </PrimaryButton>
