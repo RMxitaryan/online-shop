@@ -14,71 +14,45 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const useStyles = createUseStyles(
-  {
-    appBar: {
-      backgroundColor: "#3a3333",
-    },
-    searchBar: {
-      display: "flex",
-      flexDirection: "row",
-      alignItems: "center",
-    },
-    searchBarLeft: {
-      display: "flex",
-      flexDirection: "row",
-      alignItems: "center",
-      justifyContent: "space-around",
-      width: "100%",
-      flex: 3,
-    },
-    searchBarRight: {},
-    searchTitle: {
-      flex: 1,
-    },
-    searchInputTyp: {
-      flex: 2,
-      display: "flex",
-      flexDirection: "row",
-      alignItems: "center",
-    },
-    searchInput: {
-      borderRadius: "25px",
-      border: "none",
-      height: "35px",
-      width: "100%",
-      maxWidth: 500,
-      padding: "15px",
-    },
-    searchIcon: {
-      marginLeft: 5,
-      width: 40,
-      height: 40,
-      padding: 5,
-      "&:hover": {
-        backgroundColor: "rgba(255, 255, 255, 0.2)",
-        borderRadius: "50%",
-        cursor: "pointer",
-      },
-    },
-    searchCloseBtn: {
-      width: 40,
-      height: 40,
-      padding: 5,
-      "&:hover": {
-        backgroundColor: "rgba(255, 255, 255, 0.3)",
-        borderRadius: "50%",
-        cursor: "pointer",
-      },
-    },
-    list: {
-      width: "100%",
-      height: "100%",
-      backgroundColor: "#3a3333",
-    },
+const useStyles = createUseStyles({
+  searchBar: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
   },
-  { index: 2 }
-);
+  searchBarLeft: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-around",
+    width: "100%",
+    flex: 3,
+  },
+  searchBarRight: {},
+  searchTitle: {
+    flex: 1,
+  },
+  searchInputTyp: {
+    flex: 2,
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  searchInput: {
+    borderRadius: "25px",
+    border: "none",
+    height: "35px",
+    width: "100%",
+    maxWidth: 500,
+    padding: "15px",
+  },
+
+  list: {
+    width: "100%",
+    height: "100%",
+    backgroundColor: "#473e3a",
+  },
+});
 function FullScreenDialog({ open, handleClose }) {
   const [inputValue, setInputValue] = useState("");
   const classes = useStyles();
@@ -91,7 +65,9 @@ function FullScreenDialog({ open, handleClose }) {
         TransitionComponent={Transition}
         className={classes.dialog}
       >
-        <AppBar sx={{ position: "relative" }} className={classes.appBar}>
+        <AppBar
+          sx={{ position: "relative", backgroundColor: "rgba(46,40,38,.9)" }}
+        >
           <Toolbar className={classes.searchBar}>
             <div className={classes.searchBarLeft}>
               <Typography
@@ -116,7 +92,18 @@ function FullScreenDialog({ open, handleClose }) {
                   }}
                   className={classes.searchInput}
                 />
-                <Search className={classes.searchIcon} />
+                <Search
+                  sx={{
+                    marginLeft: 1,
+                    width: 30,
+                    height: 30,
+                    "&:hover": {
+                      backgroundColor: "rgba(255, 255, 255, 0.2)",
+                      borderRadius: "50%",
+                      cursor: "pointer",
+                    },
+                  }}
+                />
               </Typography>
             </div>
             <IconButton
@@ -126,7 +113,17 @@ function FullScreenDialog({ open, handleClose }) {
               aria-label="close"
               className={classes.searchBarRight}
             >
-              <CloseIcon className={classes.searchCloseBtn} />
+              <CloseIcon
+                sx={{
+                  width: 30,
+                  height: 30,
+                  "&:hover": {
+                    backgroundColor: "rgba(255, 255, 255, 0.3)",
+                    borderRadius: "50%",
+                    cursor: "pointer",
+                  },
+                }}
+              />
             </IconButton>
           </Toolbar>
         </AppBar>

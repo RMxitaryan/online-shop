@@ -151,6 +151,7 @@ function SignUp() {
             onClick={onSignUp}
             className={classes.PrimaryButton}
             variant="text"
+            sx={{ color: "#fff" }}
           >
             Sign Up
           </PrimaryButton>

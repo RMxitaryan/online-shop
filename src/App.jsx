@@ -19,6 +19,8 @@ import Accessories from "./components/MenuPages/Accessories";
 import { useDispatch } from "react-redux";
 import { setCard } from "./redux/user/actions";
 import MenuBar from "./components/Menu/MenuBar";
+import Basket from "./components/basket/Basket";
+
 const useStyles = createUseStyles({
   app: {
     display: "flex",
@@ -70,7 +72,6 @@ function App() {
   const handleSearchClickOpen = () => {
     setSearchDialogOpen(true);
   };
-
   const handleSearchClose = () => {
     setSearchDialogOpen(false);
   };

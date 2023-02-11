@@ -7,6 +7,7 @@ import SignInDialog from "../SignIn/SignInDialog";
 import MenuBar from "../Menu/MenuBar";
 import CarouselBox from "../CarouselBox";
 import Navbar from "../Navbar/Navbar";
+import { RingLoader } from "react-spinners";
 import { Card } from "../Cards/Card";
 import {
   getFirestore,
@@ -57,6 +58,12 @@ const useStyles = createUseStyles({
     },
   },
   headerTopLeft: { marginLeft: 15 },
+  loading: {
+    color: "#ef6f2e",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: "300px",
+  },
 });
 
 function Home({
@@ -122,47 +129,45 @@ function Home({
   console.log("basket", basket);
 
   return (
-    <>
-      <div className={classes.app}>
-        <FullScreenDialog
-          handleClickOpen={handleSearchClickOpen}
-          handleClose={handleSearchClose}
-          open={searchDialogOpen}
-        />
+    <div className={classes.app}>
+      <FullScreenDialog
+        handleClickOpen={handleSearchClickOpen}
+        handleClose={handleSearchClose}
+        open={searchDialogOpen}
+      />
 
-        <CarouselBox />
+      <CarouselBox />
 
-        {isOpenMenu ? (
-          <MenuBar isOpenMenu={isOpenMenu} setIsOpenMenu={setIsOpenMenu} />
-        ) : null}
-        <SignInDialog open={signInDialogOpen} handleClose={handleSignInClose} />
-        <SignUpDialog open={signUpDialogOpen} handleClose={handleSignUpClose} />
-        {cards.map((item) => {
-          return (
-            <Card
-              key={uuidv4()}
-              openHome={openHome}
-              handleSignUpClose={handleSignUpClose}
-              handleSignUpClickOpen={handleSignUpClickOpen}
-              handleSignInClickOpen={handleSignInClickOpen}
-              handleSignInClose={handleSignInClose}
-              src={item.src}
-              price={item.price}
-              name={item.name}
-              id={item.id}
-            />
-          );
-        })}
-        {currentUser.email && (
-          <AddCard
+      {isOpenMenu ? (
+        <MenuBar isOpenMenu={isOpenMenu} setIsOpenMenu={setIsOpenMenu} />
+      ) : null}
+      <SignInDialog open={signInDialogOpen} handleClose={handleSignInClose} />
+      <SignUpDialog open={signUpDialogOpen} handleClose={handleSignUpClose} />
+      {cards.map((item) => {
+        return (
+          <Card
+            key={uuidv4()}
+            openHome={openHome}
+            handleSignUpClose={handleSignUpClose}
             handleSignUpClickOpen={handleSignUpClickOpen}
             handleSignInClickOpen={handleSignInClickOpen}
-            updater={updater}
-            setUpdater={setUpdater}
+            handleSignInClose={handleSignInClose}
+            src={item.src}
+            price={item.price}
+            name={item.name}
+            id={item.id}
           />
-        )}
-      </div>
-    </>
+        );
+      })}
+      {currentUser.email && (
+        <AddCard
+          handleSignUpClickOpen={handleSignUpClickOpen}
+          handleSignInClickOpen={handleSignInClickOpen}
+          updater={updater}
+          setUpdater={setUpdater}
+        />
+      )}
+    </div>
   );
 }
 

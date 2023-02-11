@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../../redux/user/selector";
 import { setUser } from "../../redux/user/actions";
 import { auth } from "../../config/Config";
+import { Link } from "react-router-dom";
 
 const useStyles = createUseStyles({
   signInDialog: {
@@ -67,11 +68,12 @@ const useStyles = createUseStyles({
   error: {
     color: "#FF0000",
   },
-  signUpBtn: {
+  span: { color: "#968881" },
+  link: {
+    marginLeft: 10,
     listStyleType: "none",
     color: "#9a9999",
-    textDecoration: "underline",
-
+    textDecoration: "none",
     "&:hover": {
       cursor: "pointer",
       color: "rgb(240,240,240)",
@@ -130,6 +132,14 @@ function SignIn() {
           />
         </div>
         <div className={classes.error}>{error}</div>
+        <div>
+          <span className={classes.span}>
+            Don't have an account yet?
+            <Link className={classes.link} to="/signup">
+              Sign up here.
+            </Link>
+          </span>
+        </div>
       </div>
       <div className={classes.signInDialogActions}>
         <div>
@@ -137,17 +147,10 @@ function SignIn() {
             onClick={onSignIn}
             className={classes.PrimaryButton}
             variant="text"
+            sx={{ color: "#fff" }}
           >
             Sign In
           </PrimaryButton>
-        </div>
-        <div
-          onClick={() => {
-            navigate("/signup");
-          }}
-          className={classes.signUpBtn}
-        >
-          Sign Up
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
 import { createUseStyles } from "react-jss";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import PrimaryButton from "../Button/Button";
 import ProfileIcon from "../ProfileIcon/ProfileIcon";
@@ -74,6 +74,20 @@ const useStyles = createUseStyles({
     flexDirection: "row",
     justifyContent: "space-around",
   },
+  searchIcon: {
+    "&:hover": {
+      cursor: "pointer",
+    },
+  },
+  headerTopLeft: { marginLeft: 15 },
+  link: {
+    textDecoration: "none",
+  },
+  signActive: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-around",
+  },
 });
 
 function Navbar({
@@ -87,6 +101,7 @@ function Navbar({
   const classes = useStyles();
   const currentUser = useSelector(selectUser);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const email = auth.currentUser?.email;
@@ -139,12 +154,12 @@ function Navbar({
           ) : (
             !isSignIn && (
               <>
-                <Link className={classes.link} to="signin">
-                  <PrimaryButton>sign in</PrimaryButton>
-                </Link>
-                <Link className={classes.link} to="signup">
-                  <PrimaryButton>sign up</PrimaryButton>
-                </Link>
+                <div onClick={() => navigate("/signin")}>
+                  <PrimaryButton sx={{ color: "#fff" }}>sign in</PrimaryButton>
+                </div>
+                <div onClick={() => navigate("/signup")}>
+                  <PrimaryButton sx={{ color: "#fff" }}>sign up</PrimaryButton>
+                </div>
               </>
             )
           )}
