@@ -1,18 +1,26 @@
-import { createUseStyles } from 'react-jss';
-import { Route, Routes, Outlet } from 'react-router-dom';
-import Home from './components/HomePage/Home';
-import Navbar from './components/Navbar/Navbar';
-import { useEffect, useState } from 'react';
-import { RingLoader } from 'react-spinners';
-import { height } from '@mui/system';
-import SignIn from './components/SignIn/SignIn';
-import SignUp from './components/SignUp/SignUp';
-import { getFirestore, collection, getDocs } from 'firebase/firestore';
-import { addUsersFirebase } from './config/Config';
-import EditProfile from './components/SettingsLeftBar/SettBarRoutes/EditProfile';
-import Profile from './components/SettingsLeftBar/SettBarRoutes/Profile';
+import { createUseStyles } from "react-jss";
+import { Route, Routes, Outlet } from "react-router-dom";
+import Home from "./components/HomePage/Home";
+import Navbar from "./components/Navbar/Navbar";
+import { useEffect, useState } from "react";
+import { RingLoader } from "react-spinners";
+import { height } from "@mui/system";
+import SignIn from "./components/SignIn/SignIn";
+import SignUp from "./components/SignUp/SignUp";
+import { getFirestore, collection, getDocs } from "firebase/firestore";
+import { addUsersFirebase, db } from "./config/Config";
+import EditProfile from "./components/SettingsLeftBar/SettBarRoutes/EditProfile";
+import Profile from "./components/SettingsLeftBar/SettBarRoutes/Profile";
+import Kitchen from "./components/MenuPages/Kitchen";
+import HomeAndClimat from "./components/MenuPages/HomeAndClimat";
+import HealthAndBeauty from "./components/MenuPages/HealthAndBeauty";
+import BorkHome from "./components/MenuPages/BorkHome";
+import Accessories from "./components/MenuPages/Accessories";
+import { useDispatch } from "react-redux";
+import { setCard } from "./redux/user/actions";
 import Basket from './components/basket/Basket';
 import MenuBar from './components/Menu/MenuBar';
+
 const useStyles = createUseStyles({
 	app: {
 		display: 'flex',
@@ -32,43 +40,38 @@ const useStyles = createUseStyles({
 });
 
 function App() {
-	const [searchDialogOpen, setSearchDialogOpen] = useState(false);
-	const [signUpDialogOpen, setSignUpDialogOpen] = useState(false);
-	const [signInDialogOpen, setSignInDialogOpen] = useState(false);
-	const [isOpenMenu, setIsOpenMenu] = useState(false);
-	const [openHome, setOpenHome] = useState(true);
-	const [loading, setLoading] = useState(false);
+  const [searchDialogOpen, setSearchDialogOpen] = useState(false);
+  const [signUpDialogOpen, setSignUpDialogOpen] = useState(false);
+  const [signInDialogOpen, setSignInDialogOpen] = useState(false);
+  const [isOpenMenu, setIsOpenMenu] = useState(false);
+  const [openHome, setOpenHome] = useState(true);
+  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
 
-	useEffect(() => {
-		setLoading(true);
-		setTimeout(() => {
-			setLoading(false);
-		}, 3000);
-	}, []);
+  useEffect(() => {
+    const colRef = collection(db, "Images");
+    getDocs(colRef)
+      .then((snapshot) => {
+        let arr = [];
+        snapshot.docs.forEach((doc) => {
+          console.log(doc, "doc");
+          arr.push({ ...doc.data(), id: doc.id });
+        });
+        dispatch(setCard(arr));
+        setLoading(false);
+      })
+      .catch((err) => console.log(err.message));
+  }, []);
 
-	// const db = getFirestore();
-	// const colRef = collection(db, "SignedUpUsers");
-	// getDocs(colRef)
-	//   .then((snapshot) => {
-	//     let users = [];
-	//     snapshot.docs.forEach((doc) => {
-	//       users.push({ ...doc.data(), id: doc.id });
-	//     });
-	//     console.log(users);
-	//     console.log("kkk");
-	//   })
-	//   .catch((err) => console.log(err));
-	const handleSignUpClickOpen = () => {
-		// setSignInDialogOpen(false);
-		setSignUpDialogOpen(true);
-	};
-	const handleSignUpClose = () => {
-		setSignUpDialogOpen(false);
-	};
-	const handleSearchClickOpen = () => {
-		setSearchDialogOpen(true);
-	};
-
+  const handleSignUpClickOpen = () => {
+    setSignUpDialogOpen(true);
+  };
+  const handleSignUpClose = () => {
+    setSignUpDialogOpen(false);
+  };
+  const handleSearchClickOpen = () => {
+    setSearchDialogOpen(true);
+  };
 	const handleSearchClose = () => {
 		setSearchDialogOpen(false);
 	};
@@ -83,67 +86,65 @@ function App() {
 		setIsOpenMenu(!isOpenMenu);
 	};
 
-	const classes = useStyles();
-	return (
-		<div className={classes.app}>
-			{loading ? (
-				<RingLoader
-					color={'#ef6f2e'}
-					loading={loading}
-					size={150}
-					className={classes.loading}
-				/>
-			) : (
-				<>
-					<Routes>
-						<Route
-							path="/"
-							element={
-								<Navbar
-									handelClickMenuBar={handelClickMenuBar}
-									setOpenHome={setOpenHome}
-									openHome={openHome}
-									handleSignInClickOpen={handleSignInClickOpen}
-									handleSignUpClickOpen={handleSignUpClickOpen}
-									handleSearchClickOpen={handleSearchClickOpen}
-								/>
-							}
-						>
-							<Route
-								index
-								element={
-									<Home
-										setIsOpenMenu={setIsOpenMenu}
-										isOpenMenu={isOpenMenu}
-										openHome={openHome}
-										signInDialogOpen={signInDialogOpen}
-										handleSignInClose={handleSignInClose}
-										handleSignInClickOpen={handleSignInClickOpen}
-										signUpDialogOpen={signUpDialogOpen}
-										handleSignUpClose={handleSignUpClose}
-										handleSearchClickOpen={handleSearchClickOpen}
-										handleSearchClose={handleSearchClose}
-										handleSignUpClickOpen={handleSignUpClickOpen}
-										searchDialogOpen={searchDialogOpen}
-									/>
-								}
-							/>
-							{/* <Route path="signin/profile" element={<Account />} /> */}
-							{/* <Route path="favourite" element={<Favourite />} /> */}
-							{/* <Route path="about" element={<About />} /> */}
-							<Route path="signin" element={<SignIn />} />
-							<Route path="signup" element={<SignUp />} />
-							<Route path="profile" element={<Profile />} />
-							<Route path="editprofile" element={<EditProfile />} />
-							<Route path="basket" element={<Basket />} />
-							{/* <Route
-							path="profile/account"
-							element={<Account name="Tigran" surname="Gevorgyan" />}
-						/> */}
-						</Route>
-					</Routes>
-
-					{isOpenMenu ? (
+  const classes = useStyles();
+  return (
+    <div className={classes.app}>
+      {loading ? (
+        <RingLoader
+          color={"#ef6f2e"}
+          loading={loading}
+          size={150}
+          className={classes.loading}
+        />
+      ) : (
+      <>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Navbar
+                handelClickMenuBar={handelClickMenuBar}
+                setOpenHome={setOpenHome}
+                openHome={openHome}
+                handleSignInClickOpen={handleSignInClickOpen}
+                handleSignUpClickOpen={handleSignUpClickOpen}
+                handleSearchClickOpen={handleSearchClickOpen}
+                setIsOpenMenu={setIsOpenMenu}
+                isOpenMenu={isOpenMenu}
+              />
+            }
+          >
+            <Route
+              index
+              element={
+                <Home
+                  setIsOpenMenu={setIsOpenMenu}
+                  isOpenMenu={isOpenMenu}
+                  openHome={openHome}
+                  signInDialogOpen={signInDialogOpen}
+                  handleSignInClose={handleSignInClose}
+                  handleSignInClickOpen={handleSignInClickOpen}
+                  signUpDialogOpen={signUpDialogOpen}
+                  handleSignUpClose={handleSignUpClose}
+                  handleSearchClickOpen={handleSearchClickOpen}
+                  handleSearchClose={handleSearchClose}
+                  handleSignUpClickOpen={handleSignUpClickOpen}
+                  searchDialogOpen={searchDialogOpen}
+                />
+              }
+            />
+            <Route path="signin" element={<SignIn />} />
+            <Route path="signup" element={<SignUp />} />
+            <Route path="profile" element={<Profile />} />
+            <Route path="editprofile" element={<EditProfile />} />
+            <Route path="Kitchen" element={<Kitchen />} />
+            <Route path="HomeAndClimat" element={<HomeAndClimat />} />
+            <Route path="HealthAndBeauty" element={<HealthAndBeauty />} />
+            <Route path="BorkHome" element={<BorkHome />} />
+            <Route path="Accessories" element={<Accessories />} />
+          </Route>
+        </Routes>
+    					{isOpenMenu ? (
 						<MenuBar isOpenMenu={isOpenMenu} setIsOpenMenu={setIsOpenMenu} />
 					) : null}
 				</>

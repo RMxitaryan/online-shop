@@ -7,6 +7,7 @@ import SignInDialog from "../SignIn/SignInDialog";
 import MenuBar from "../Menu/MenuBar";
 import CarouselBox from "../CarouselBox";
 import Navbar from "../Navbar/Navbar";
+import { RingLoader } from "react-spinners";
 import { Card } from "../Cards/Card";
 import {
   getFirestore,
@@ -26,6 +27,7 @@ import { setBasket, setCard } from "../../redux/user/actions";
 import { v4 as uuidv4 } from "uuid";
 import { auth, db } from "../../config/Config";
 import { AddCard } from "../Cards/AddCard";
+
 
 const useStyles = createUseStyles({
   header: {
@@ -57,6 +59,12 @@ const useStyles = createUseStyles({
     },
   },
   headerTopLeft: { marginLeft: 15 },
+  loading: {
+    color: "#ef6f2e",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: "300px",
+  },
 });
 
 function Home({
@@ -122,15 +130,14 @@ function Home({
   console.log("basket", basket);
 
   return (
-    <>
-      <div className={classes.app}>
-        <FullScreenDialog
-          handleClickOpen={handleSearchClickOpen}
-          handleClose={handleSearchClose}
-          open={searchDialogOpen}
-        />
+    <div className={classes.app}>
+      <FullScreenDialog
+        handleClickOpen={handleSearchClickOpen}
+        handleClose={handleSearchClose}
+        open={searchDialogOpen}
+      />
 
-        <CarouselBox />
+      <CarouselBox />
 
         {isOpenMenu ? (
           <MenuBar isOpenMenu={isOpenMenu} setIsOpenMenu={setIsOpenMenu} />
@@ -162,7 +169,7 @@ function Home({
           />
         )}
       </div>
-    </>
+
   );
 }
 

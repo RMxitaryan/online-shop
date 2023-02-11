@@ -99,19 +99,31 @@ const MenuBar = ({ isOpenMenu, setIsOpenMenu }) => {
       <div className={classes.mainMenu}>
         <ul className={classes.menuItems}>
           <li>
-            <Link className={classes.link}>Kitchen</Link>
+
+            <Link className={classes.link} to="/Kitchen">
+              Kitchen
+            </Link>
           </li>
           <li>
-            <Link className={classes.link}>Home & climat</Link>
+            <Link className={classes.link} to="/HomeAndClimat">
+              Home & climat
+            </Link>
           </li>
           <li>
-            <Link className={classes.link}>Health & beauty</Link>
+            <Link className={classes.link} to="/HealthAndBeauty">
+              Health & beauty
+            </Link>
           </li>
           <li>
-            <Link className={classes.link}>Bork home</Link>
+            <Link className={classes.link} to="/BorkHome">
+              Bork home
+            </Link>
           </li>
           <li>
-            <Link className={classes.link}>accessories</Link>
+            <Link className={classes.link} to="/Accessories">
+              accessories
+            </Link>
+
           </li>
         </ul>
       </div>

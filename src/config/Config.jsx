@@ -13,8 +13,9 @@ import {
 } from "firebase/firestore";
 import "firebase/compat/storage";
 import { initializeApp } from "firebase/app";
-import { v4 as uuidv4 } from "uuid";
+import { v4 as uuid } from "uuid";
 import { getStorage } from "firebase/storage";
+import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCt1AdV22OrgmirQNOn54vFVbkywPvziNg",
@@ -39,6 +40,8 @@ export const firestore = firebase.firestore();
 
 export const storage = getStorage(app);
 
+export const user = getAuth();
+
 // const colRef = collection(db, "SignedUpUsers");
 // getDocs(colRef)
 //   .then((snapshot) => {
@@ -50,11 +53,24 @@ export const storage = getStorage(app);
 //   })
 //   .catch((err) => console.log(err.message));
 
-export const addUsersFirebase = (userName, email, password) => {
-  setDoc(doc(db, "SignedUpUsers", uuidv4()), {
-    userName: userName,
+export const addUsersFirebase = (
+  // userName,
+  email,
+  // password,
+  photoUrl,
+  firstName,
+  lastName,
+  phone,
+  id
+) => {
+  setDoc(doc(db, "SignedUpUsers", uuid()), {
+    // userName: userName,
     email: email,
-    password: password,
+    // password: password,
+    // photoUrl: photoUrl,
+    firstName: firstName,
+    lastName: lastName,
+    phone: phone,
   });
 };
 

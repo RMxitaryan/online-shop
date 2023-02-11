@@ -9,28 +9,32 @@ import { auth } from '../../config/Config';
 import { setUser } from '../../redux/user/actions';
 import { useLocation } from 'react-router-dom';
 const useStyles = createUseStyles({
-	header: {
-		backgroundColor: '#3a3330',
-		width: '100%',
-		height: 60,
-		header: {},
-		display: 'flex',
-		flexDirection: 'row',
-		justifyContent: 'space-between',
-		alignItems: 'center',
-	},
-	name: {
-		marginLeft: '200px',
-		color: 'white',
-		fontSize: 27,
-	},
-	headerTopRight: {
-		display: 'flex',
-		alignItems: 'center',
-		justifyContent: 'space-between',
-		// width: currentUser.email ? 100 : 250,
-		marginRight: 12,
-	},
+
+  header: {
+    backgroundColor: "#3a3330",
+    width: "100%",
+    height: 60,
+    header: {},
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    backdropFilter: "blur(30px)",
+    boxSizing: "border-box",
+    borderBottom: "1px solid white",
+  },
+  name: {
+    marginLeft: "200px",
+    color: "white",
+    fontSize: 27,
+  },
+  headerTopRight: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    // width: currentUser.email ? 100 : 250,
+    marginRight: 12,
+  },
 
 	searchIcon: {
 		'&:hover': {

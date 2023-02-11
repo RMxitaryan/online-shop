@@ -8,18 +8,27 @@ import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import AddBusinessIcon from "@mui/icons-material/AddBusiness";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { auth, storage } from "../../config/Config";
+import { addUsersFirebase, auth, db, storage, user } from "../../config/Config";
 import { setUser } from "../../redux/user/actions";
 import { useDispatch, useSelector } from "react-redux";
 import Avatar from "@mui/material/Avatar";
 import { deepOrange } from "@mui/material/colors";
-import { getDownloadURL, listAll, ref, uploadBytes } from "firebase/storage";
+import {
+  getDownloadURL,
+  listAll,
+  ref,
+  uploadBytes,
+  uploadBytesResumable,
+} from "firebase/storage";
 import { v4 as uuid } from "uuid";
 import { Button, TextField } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { selectUser } from "../../redux/user/selector";
+import { getAuth, updateProfile } from "firebase/auth";
+import { addDoc, collection, setDoc, doc } from "firebase/firestore";
+import { createUseStyles } from "react-jss";
 
 const theme = createTheme({
   palette: {
@@ -37,7 +46,7 @@ const theme = createTheme({
     // },
   },
 });
-const useStyles = makeStyles({
+const useStyles = createUseStyles({
   accSettBar: {
     backgroundColor: "#3a3333",
     display: "flex",
@@ -117,45 +126,21 @@ function AccSettBar({ name, surname }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const currentUser = useSelector(selectUser);
-  const [image, setImage] = useState(null);
-  const [url, setUrl] = useState(null);
-
+  const auth = getAuth();
   const handelEditProfileClick = () => {
     navigate("/editprofile");
   };
 
-  const handelLogOutClick = () => {
+  const handelLogOutClick = (e) => {
+    e.preventDefault();
     auth.signOut();
     dispatch(setUser({}));
     return navigate("/");
   };
-  const imageRef = ref(storage, "image");
-  const uploadImage = () => {
-    uploadBytes(imageRef, image).then(() => {
-      getDownloadURL(imageRef)
-        .then((url) => {
-          setUrl(url);
-        })
-        .catch((error) => {
-          console.log(error.message);
-        });
-      setImage(null);
-      dispatch(setUser({ url: url }));
-    });
-  };
 
-  useEffect(() => {
-    getDownloadURL(imageRef)
-      .then((url) => {
-        dispatch(setUser({ ...currentUser, url: url }));
-        setUrl(url);
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-    setImage(null);
-  }, []);
-  console.log("ACCcurrentUser", currentUser);
+  console.log(auth, "auth");
+
+  console.log("currentUser", currentUser);
   return (
     <>
       <ThemeProvider theme={theme}>
@@ -176,23 +161,6 @@ function AccSettBar({ name, surname }) {
                 <AccountCircleOutlined className={classes.accImage} />
               )}
             </Avatar>
-            <div className={classes.uploadImage}>
-              <div
-                onChange={(e) => {
-                  setImage(e.target.files[0]);
-                }}
-              >
-                <IconButton
-                  color="primary"
-                  aria-label="upload picture"
-                  component="label"
-                >
-                  <input hidden accept="image/*" type="file" />
-                  <PhotoCamera />
-                </IconButton>
-              </div>
-              <Button onClick={uploadImage}>Upload image</Button>
-            </div>
             <div className={classes.userInfo}>
               {currentUser.firstName ? (
                 <h3>{`${currentUser.firstName} ${currentUser.lastName}`}</h3>

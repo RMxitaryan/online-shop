@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
-import PrimaryButton from '../Button/Button';
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/auth';
-import 'firebase/compat/database';
-import { createUseStyles } from 'react-jss';
-import { borderColor } from '@mui/system';
-import { useNavigate } from 'react-router';
-import { set } from '@firebase/database';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectUser } from '../../redux/user/selector';
-import { setUser } from '../../redux/user/actions';
+import React, { useState } from "react";
+import PrimaryButton from "../Button/Button";
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import "firebase/compat/database";
+import { createUseStyles } from "react-jss";
+import { borderColor } from "@mui/system";
+import { Navigate, useNavigate } from "react-router";
+import { set } from "@firebase/database";
+import { useDispatch, useSelector } from "react-redux";
+import { selectUser } from "../../redux/user/selector";
+import { setUser } from "../../redux/user/actions";
+import { auth } from "../../config/Config";
+
 
 const useStyles = createUseStyles({
 	signInDialog: {
@@ -100,6 +102,8 @@ function SignIn() {
 				}
 			);
 	};
+    if (auth.currentUser) {
+    return <Navigate to="/" />;}
 	return (
 		<div className={classes.signInDialog}>
 			<div className={classes.signInContent}>

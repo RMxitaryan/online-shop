@@ -8,7 +8,12 @@ import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../../redux/user/selector";
 import { setUser } from "../../redux/user/actions";
+import { addUsersFirebase, auth, db } from "../../config/Config";
+import { Navigate } from "react-router-dom";
+import { setDoc, doc } from "firebase/firestore";
+import { v4 as uuid } from "uuid";
 import { addBasket, addUsersFirebase } from "../../config/Config";
+
 
 const useStyles = createUseStyles({
   signUpDialog: {
@@ -80,17 +85,31 @@ function SignUp() {
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then((auth) => {
+        console.log(auth, "signUp");
         setEmail("");
         setUserName("");
         setPassword("");
-        addUsersFirebase(userName, email, password);
+        alert(auth.user?.uid);
+        setDoc(doc(db, "SignedUpUsers", auth.user.uid), {
+          userName,
+          email,
+          password,
+          fistName: "",
+          lastName: "",
+          phone: "",
+          url: "",
+        });
+        // addUsersFirebase(userName, email, password);
         dispatch(setUser({ ...currentUser, email: auth.user.email }));
         addBasket(email);
         return navigate("/");
       })
       .catch((error) => setError("Invalid email or password"));
+    firebase.auth().signInWithEmailAndPassword(email, password);
   };
-
+  if (auth.currentUser) {
+    return <Navigate to="/" />;
+  }
   return (
     <div className={classes.signUpDialog}>
       <div className={classes.signUpContent}>
