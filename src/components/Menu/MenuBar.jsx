@@ -99,6 +99,7 @@ const MenuBar = ({ isOpenMenu, setIsOpenMenu }) => {
       <div className={classes.mainMenu}>
         <ul className={classes.menuItems}>
           <li>
+
             <Link className={classes.link} to="/Kitchen">
               Kitchen
             </Link>
@@ -122,6 +123,7 @@ const MenuBar = ({ isOpenMenu, setIsOpenMenu }) => {
             <Link className={classes.link} to="/Accessories">
               accessories
             </Link>
+
           </li>
         </ul>
       </div>

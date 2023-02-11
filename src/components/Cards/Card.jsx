@@ -3,10 +3,13 @@ import { Link } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
 import CheckIcon from "@mui/icons-material/Check";
 import { useEffect, useState } from "react";
-import { auth } from "../../config/Config";
+import { addItemFirebase, auth, deleteItemFirebase } from "../../config/Config";
 import SignDialog from "../Dialog/SignDialog";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import { useDispatch, useSelector } from "react-redux";
+import { selectBasket, selectUser } from "../../redux/user/selector";
+import { setBasket } from "../../redux/user/actions";
 const useStyles = createUseStyles({
   cardContainer: {
     position: "relative",
@@ -168,19 +171,48 @@ export const Card = ({
   src,
   price,
   name,
+  id,
 }) => {
   const classes = useStyles();
   const [isAdd, setIsAdd] = useState(false);
   const [openSignDialog, setOpenSignDialog] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
+  const currentUser = useSelector(selectUser);
+  const basket = useSelector(selectBasket);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (currentUser.email) {
+        basket.map((item) => {
+          if (item.id === id) {
+            setIsAdd(!isAdd);
+          }
+        });
+      }
+    }, 0);
+  }, [currentUser.email]);
 
   const handelAddClick = () => {
     if (auth.currentUser) {
+      const card = {
+        src: src,
+        name: name,
+        price: price,
+        id: id,
+      };
       setIsAdd(!isAdd);
+      addItemFirebase(card, currentUser.email, id);
     } else {
       setOpenSignDialog(true);
     }
   };
+
+  const handleCheckClick = () => {
+    setIsAdd(!isAdd);
+    deleteItemFirebase(currentUser.email, id);
+  };
+
   const handelFavoriteClick = () => {
     if (auth.currentUser) {
       setIsFavorite(!isFavorite);
@@ -214,7 +246,10 @@ export const Card = ({
           )}
 
           {isAdd ? (
-            <CheckIcon onClick={handelAddClick} className={classes.addedItem} />
+            <CheckIcon
+              onClick={handleCheckClick}
+              className={classes.addedItem}
+            />
           ) : (
             <AddIcon onClick={handelAddClick} className={classes.addIcon} />
           )}
@@ -223,7 +258,7 @@ export const Card = ({
       <footer className={classes.cardFooter}>
         <div>
           <span className={classes.title}>{name}</span>
-          <span className={classes.price}>{`Price : ${price}`}</span>
+          <span className={classes.price}>{`Price : ${price} $`}</span>
         </div>
       </footer>
       <SignDialog

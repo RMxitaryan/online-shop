@@ -18,22 +18,25 @@ import BorkHome from "./components/MenuPages/BorkHome";
 import Accessories from "./components/MenuPages/Accessories";
 import { useDispatch } from "react-redux";
 import { setCard } from "./redux/user/actions";
+import Basket from './components/basket/Basket';
+import MenuBar from './components/Menu/MenuBar';
+
 const useStyles = createUseStyles({
-  app: {
-    display: "flex",
-    flexDirection: "column",
-    width: "100%",
-    height: "100%",
-    marginRight: 0,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  loading: {
-    color: "#ef6f2e",
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: "300px",
-  },
+	app: {
+		display: 'flex',
+		flexDirection: 'column',
+		width: '100%',
+		height: '100%',
+		marginRight: 0,
+		justifyContent: 'center',
+		alignItems: 'center',
+	},
+	loading: {
+		color: '#ef6f2e',
+		justifyContent: 'center',
+		alignItems: 'center',
+		marginTop: '300px',
+	},
 });
 
 function App() {
@@ -69,20 +72,19 @@ function App() {
   const handleSearchClickOpen = () => {
     setSearchDialogOpen(true);
   };
+	const handleSearchClose = () => {
+		setSearchDialogOpen(false);
+	};
+	const handleSignInClickOpen = () => {
+		setSignInDialogOpen(true);
+	};
+	const handleSignInClose = () => {
+		setSignInDialogOpen(false);
+	};
 
-  const handleSearchClose = () => {
-    setSearchDialogOpen(false);
-  };
-  const handleSignInClickOpen = () => {
-    setSignInDialogOpen(true);
-  };
-  const handleSignInClose = () => {
-    setSignInDialogOpen(false);
-  };
-
-  const handelClickMenuBar = () => {
-    setIsOpenMenu(!isOpenMenu);
-  };
+	const handelClickMenuBar = () => {
+		setIsOpenMenu(!isOpenMenu);
+	};
 
   const classes = useStyles();
   return (
@@ -95,6 +97,7 @@ function App() {
           className={classes.loading}
         />
       ) : (
+      <>
         <Routes>
           <Route
             path="/"
@@ -141,9 +144,13 @@ function App() {
             <Route path="Accessories" element={<Accessories />} />
           </Route>
         </Routes>
-      )}
-    </div>
-  );
+    					{isOpenMenu ? (
+						<MenuBar isOpenMenu={isOpenMenu} setIsOpenMenu={setIsOpenMenu} />
+					) : null}
+				</>
+			)}
+		</div>
+	);
 }
 
 export default App;
